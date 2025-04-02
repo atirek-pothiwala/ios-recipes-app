@@ -7,12 +7,21 @@
 
 import SwiftUI
 
-struct RecipeCellModifier: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+struct RecipeCellModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .listRowBackground(
+                RoundedRectangle(cornerRadius: 15)
+                    .foregroundStyle(Color.accentColor.opacity(0.1))
+            )
+            .listRowSeparator(.hidden)
+            .listRowInsets(
+                EdgeInsets(
+                    top: 15,
+                    leading: 15,
+                    bottom: 15,
+                    trailing: 15
+                )
+            )
     }
-}
-
-#Preview {
-    RecipeCellModifier()
 }

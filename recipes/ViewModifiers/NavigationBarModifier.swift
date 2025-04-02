@@ -7,29 +7,16 @@
 
 import SwiftUI
 
-typealias OnClick = () -> Void
-
 struct NavigationBarModifier: ViewModifier {
+    
+    typealias OnClick = () -> Void
     
     var title: String
     var onBack: OnClick?
-    var onNextField: OnClick?
-    var onPrevField: OnClick?
-    var isNextField: Bool
-    var isPrevField: Bool
     
-    init(_ title: String,
-         onBack: OnClick? = nil,
-         onNextField: OnClick? = nil,
-         isNextField: Bool = false,
-         onPrevField: OnClick? = nil,
-         isPrevField: Bool = false) {
+    init(_ title: String, _ onBack: OnClick? = nil) {
         self.title = title
         self.onBack = onBack
-        self.onNextField = onNextField
-        self.onPrevField = onPrevField
-        self.isNextField = isNextField
-        self.isPrevField = isPrevField
     }
     
     func body(content: Content) -> some View {
@@ -44,23 +31,6 @@ struct NavigationBarModifier: ViewModifier {
                             onBack?()
                         }
                     }
-                }
-                
-                ToolbarItemGroup(placement: .keyboard) {
-                    Spacer()
-                    
-                    Button {
-                        onNextField?()
-                    } label: {
-                        Image(systemName: "chevron.up")
-                    }.disabled(!isNextField)
-                    
-                    Button {
-                        onPrevField?()
-                    } label: {
-                        Image(systemName: "chevron.down")
-                    }.disabled(!isPrevField)
-
                 }
             }
     }

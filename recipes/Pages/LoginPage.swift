@@ -8,24 +8,25 @@
 import SwiftUI
 
 struct LoginPage: View {
-    
+        
+    @StateObject private var viewModel = AccountVM()
     @State private var email: String = ""
-    @FocusState private var isFocusedEmail: Bool
-
     @State private var password: String = ""
-    @FocusState private var isFocusedPassword: Bool
-    @State var showPassword: Bool = false
-
     
+    @FocusState private var focusedInput: Field?
+    
+
     var body: some View {
-        VStack(alignment: .center) {
-            Spacer()
-            
-            LogoView()
-            
-            Spacer()
-            
+        ScrollView(.vertical) {
             VStack(alignment: .trailing, spacing: 15) {
+                LogoView()
+                
+                Text("Enter you email address and password for login. Explore food recipes 😋")
+                    .foregroundStyle(.white)
+                    .multilineTextAlignment(.leading)
+                    .font(.system(size: 18, weight: .regular))
+                    .frame(maxWidth: .infinity)
+                
                 tfEmail
                 tfPassword
                 
@@ -33,14 +34,25 @@ struct LoginPage: View {
                     btnRegister
                     btnLogin
                 }
+                
+                btnForgotPassword
             }
-            
-            Spacer()
-            
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity)
         .background(Color.accentColor)
+        .navigationBarBackButtonHidden()
+        .modifier(
+            KeyboardModifier(
+                onClose: dismissKeyboard,
+                onNext: hasReachedEnd() ? nil : nextField,
+                onPrev: hasReachedStart() ? nil : prevField
+            )
+        )
         .safeAreaPadding()
+        .onAppear {
+            viewModel.fetchAccounts()
+        }
+
     }
     
     var tfEmail: some View {
@@ -48,98 +60,59 @@ struct LoginPage: View {
             Text("Email Address")
                 .foregroundStyle(.white.opacity(0.25))
         }
-        .font(.system(size: 18, weight: .regular))
-        .textContentType(.emailAddress)
-        .focused($isFocusedEmail)
-        .textInputAutocapitalization(.never)
+        .modifier(TextFieldModifier())
+        .focused($focusedInput, equals: .email)
         .keyboardType(.emailAddress)
-        .foregroundStyle(.white)
-        .tint(.white)
-        .frame(maxWidth: .infinity)
-        .padding()
-        .background(.black.opacity(0.15), in: .buttonBorder)
+        .textContentType(.emailAddress)
+        .textInputAutocapitalization(.never)
         .submitLabel(.next)
         .onSubmit {
-            isFocusedEmail = false
-            isFocusedPassword = true
+            focusedInput = .password
         }
     }
     
     var tfPassword: some View {
-        HStack {
-            if showPassword {
-                tfUnsecurePassword
-            } else {
-                tfSecurePassword
-            }
-            Button {
-                showPassword.toggle()
-            } label: {
-                Image(systemName: showPassword ? "eye.fill" : "eye.slash.fill")
-                    .scaledToFit()
-                    .foregroundStyle(.white.opacity(0.5))
-                    .padding()
-            }
-
-        }
-        .frame(maxWidth: .infinity)
-        .background(.black.opacity(0.15), in: .buttonBorder)
-        
-    }
-    
-    var tfUnsecurePassword: some View {
-        TextField(text: $password) {
-            Text("Password")
-                .foregroundStyle(.white.opacity(0.25))
-        }
-        .font(.system(size: 18, weight: .regular))
-        .textContentType(.password)
-        .focused($isFocusedPassword)
-        .keyboardType(.default)
-        .foregroundStyle(.white)
-        .tint(.white)
-        .frame(maxWidth: .infinity)
-        .padding()
-        .submitLabel(.done)
-        .onSubmit {
-            UIScreen.dismissKeyboard()
-        }
-    }
-    
-    var tfSecurePassword: some View {
         SecureField(text: $password) {
             Text("Password")
                 .foregroundStyle(.white.opacity(0.25))
         }
-        .textContentType(.password)
-        .focused($isFocusedPassword)
+        .modifier(TextFieldModifier())
+        .focused($focusedInput, equals: .password)
         .keyboardType(.default)
-        .foregroundStyle(.white)
-        .tint(.white)
-        .frame(maxWidth: .infinity)
-        .padding()
+        .textContentType(.password)
+        .textInputAutocapitalization(.none)
         .submitLabel(.done)
         .onSubmit {
-            UIScreen.dismissKeyboard()
+            focusedInput = .none
         }
+    }
+    
+    var btnForgotPassword: some View {
+        NavigationLink {
+            ForgotPasswordPage()
+        } label: {
+            Text("Forgot Password?")
+        }
+        .foregroundStyle(.white)
+        .font(.system(size: 18, weight: .regular))
+
     }
     
     var btnLogin: some View {
         NavigationLink {
-            
+            TabPage()
         } label: {
-            Text("Login")
+            Image(systemName: "chevron.right")
         }
-        .foregroundStyle(Color.accentColor)
+        .foregroundStyle(Color.black)
         .font(.system(size: 18, weight: .bold))
-        .padding(.horizontal, 24)
-        .padding(.vertical, 16)
-        .background(.white, in: .capsule)
+        .padding(.all, 16)
+        .background(.white, in: .circle)
     }
     
     var btnRegister: some View {
         NavigationLink {
-            
+            RegisterPage()
         } label: {
             Text("New Account")
         }
@@ -148,6 +121,41 @@ struct LoginPage: View {
         .padding(.horizontal, 24)
         .padding(.vertical, 16)
         .background(.black, in: .capsule)
+    }
+}
+
+private extension LoginPage {
+    enum Field: Int, Hashable, CaseIterable {
+        case email
+        case password
+    }
+    
+    func dismissKeyboard() {
+        self.focusedInput = nil
+    }
+    
+    func nextField() {
+        guard let currentInput = focusedInput,
+        let lastIndex = Field.allCases.last?.rawValue else { return }
+        
+        let index = min(currentInput.rawValue + 1, lastIndex)
+        self.focusedInput = Field(rawValue: index)
+    }
+    
+    func prevField() {
+        guard let currentInput = focusedInput,
+        let firstIndex = Field.allCases.first?.rawValue else { return }
+        
+        let index = max(currentInput.rawValue - 1, firstIndex)
+        self.focusedInput = Field(rawValue: index)
+    }
+    
+    func hasReachedStart() -> Bool {
+        self.focusedInput == Field.allCases.first
+    }
+    
+    func hasReachedEnd() -> Bool {
+        self.focusedInput == Field.allCases.last
     }
 }
 

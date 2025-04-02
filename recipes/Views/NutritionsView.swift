@@ -7,44 +7,27 @@
 
 import SwiftUI
 
-struct InstructionsView: View {
+typealias NutritionFact = (title: String, servings: String)
+
+struct NutritionsView: View {
     
-    let list: [String]
+    let list: [NutritionFact]
     
-    init(_ list: [String]) {
+    init(_ list: [NutritionFact]) {
         self.list = list
     }
     
     var body: some View {
         VStack(spacing: 15) {
-            Text("Instructions")
+            Text("Nutrition Facts")
                 .frame(maxWidth: .infinity, alignment: .center)
                 .font(.system(size: 20, weight: .semibold))
                 .foregroundStyle(.black)
                 .padding(.top, 5)
-            
+         
             VStack {
-                ForEach(0..<self.list.count, id: \.self) { index in
-                    VStack(alignment: .leading, spacing: 0) {
-                        Text("Step \(index + 1)")
-                            .font(.system(size: 15, weight: .semibold))
-                            .foregroundStyle(.black)
-                        
-                        Text(self.list[index])
-                            .font(.system(size: 15, weight: .regular))
-                            .foregroundStyle(.black)
-                            .padding(.top, 5)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 10)
-                    
-                    if index < self.list.count - 1 {
-                        Rectangle()
-                            .foregroundStyle(.gray.opacity(0.15))
-                            .frame(maxWidth: .infinity, maxHeight: 1)
-                    }
-                }
+                headerView()
+                listView()
             }
             .padding(.vertical, 10)
             .cornerRadius(15, antialiased: true)
@@ -56,8 +39,51 @@ struct InstructionsView: View {
         .frame(maxWidth: .infinity)
         .padding(.all)
     }
+    
+    func headerView() -> some View {
+        VStack(spacing: 0) {
+            HStack(alignment: .center, spacing: 0) {
+                Text("Per Servings")
+                    .font(.system(size: 15, weight: .black))
+                    .foregroundStyle(.black)
+                Spacer()
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 10)
+            
+            Rectangle()
+                .foregroundStyle(.gray.opacity(0.15))
+                .frame(maxWidth: .infinity, maxHeight: 1)
+        }
+    }
+    
+    func listView() -> some View {
+        ForEach(0..<list.count, id: \.self) { index in
+            VStack(spacing: 0) {
+                HStack(alignment: .center, spacing: 0) {
+                    Text(list[index].title)
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(.black)
+                    Spacer()
+                    Text(list[index].servings)
+                        .font(.system(size: 15, weight: .regular))
+                        .foregroundStyle(.black)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
+                
+                if index < list.count - 1 {
+                    Rectangle()
+                        .foregroundStyle(.gray.opacity(0.15))
+                        .frame(maxWidth: .infinity, maxHeight: 1)
+                }
+            }
+        }
+    }
 }
 
 #Preview {
-    InstructionsView(Constants.shared.instructions)
+    NutritionsView(Constants.shared.nutritionFacts)
 }

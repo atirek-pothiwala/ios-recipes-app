@@ -8,32 +8,42 @@
 import SwiftUI
 
 struct PrepTimeView: View {
-    var title: String
     var value: String
-    var systemImage: String
+    var direction: HorizontalEdge
+    var textColor: Color
+    var shadowColor: Color
     
-    init(title: String, value: String, systemImage: String) {
-        self.title = title
+    init(_ value: String,
+         direction: HorizontalEdge = .trailing,
+         textColor: Color = .white,
+         shadowColor: Color = .black) {
         self.value = value
-        self.systemImage = systemImage
+        self.direction = direction
+        self.textColor = textColor
+        self.shadowColor = shadowColor
+        
     }
     
     var body: some View {
         HStack(alignment: .center, spacing: 7.5) {
-            Text(self.title)
+            if direction == .leading {
+                Image(systemName: "hourglass.circle.fill")
+                    .font(.system(size: 20, weight: .regular))
+            }
+            Text("Prep Time")
                 .font(.system(size: 15, weight: .regular))
             Text(self.value)
                 .font(.system(size: 15, weight: .bold))
-            Image(systemName: self.systemImage)
-                .font(.system(size: 20, weight: .regular))
+            if direction == .trailing {
+                Image(systemName: "hourglass.circle.fill")
+                    .font(.system(size: 20, weight: .regular))
+            }
         }
-        .foregroundStyle(.white)
-        .shadow(color: .black, radius: 10)
+        .foregroundStyle(textColor)
+        .shadow(color: shadowColor, radius: 10)
     }
 }
 
 #Preview {
-    PrepTimeView(title: "Serves",
-              value: "1",
-              systemImage: "fork.knife.circle.fill")
+    PrepTimeView("2 mins")
 }

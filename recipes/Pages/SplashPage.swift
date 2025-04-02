@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct SplashPage: View {
+        
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(alignment: .center) {
                 Spacer()
                 
                 LogoView()
@@ -27,15 +28,14 @@ struct SplashPage: View {
     
     var btnGetStarted: some View {
         NavigationLink {
-            LoginView()
+            LoginPage()
         } label: {
-            Text("Get Started")
+            Image(systemName: "chevron.right")
+                .modifier(ColorEffectModifier(.red))
         }
-        .foregroundStyle(Color.accentColor)
-        .font(.system(size: 18, weight: .bold))
-        .padding(.vertical, 16)
-        .padding(.horizontal, 24)
-        .background(.white, in: .capsule)
+        .font(.system(size: 24, weight: .bold))
+        .padding(.all, 24)
+        .background(.white, in: .circle)
     }
 }
 

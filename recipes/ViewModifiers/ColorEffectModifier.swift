@@ -10,16 +10,20 @@ import SwiftUI
 struct ColorEffectModifier: ViewModifier {
     
     private var color: Color
-    @Binding private var animate: Bool
+    @State private var animate: Bool = false
     
-    init(_ animate: Binding<Bool>, _ color: Color) {
-        _animate = animate
+    init(_ color: Color) {
         self.color = color
     }
     
     func body(content: Content) -> some View {
         content
         .foregroundStyle(animate ? color : Color.black)
-        .animation(Animation.easeOut(duration: 1).repeatForever(autoreverses: true), value: animate)
+        .animation(Animation.easeInOut(duration: 1).repeatForever(autoreverses: true), value: animate)
+        .onAppear {
+            withTransaction(Transaction(animation: nil)) {
+                animate = true
+            }
+        }
     }
 }

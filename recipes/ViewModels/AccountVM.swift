@@ -8,31 +8,22 @@
 
 import Foundation
 
-class CityVM: ObservableObject {
-    private let service = CityService()
-    
-    @Published var search: String = "" {
-        didSet {
-            searchCities()
-        }
-    }
-    @Published var cityList: [CityModel] = []
-    @Published var filterListCity: [CityModel] = []
-    @Published var searchCount: String = ""
-    
-    func searchCities() {
-        if !search.isEmpty {
-            filterListCity = cityList.filter {
-                $0.name.lowercased().contains(search.lowercased())
+class AccountVM: ObservableObject {
+    private let service = AccountService()
+        
+    func fetchAccounts() {
+        service.fetch { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let accounts):
+                    for account in accounts {
+                        print("Account Email: \(account.email)")
+                    }
+                case .failure(let error):
+                    print("Error: \(error.localizedDescription)")
+                    //self?.errorMessage = error.localizedDescription
+                }
             }
-        } else {
-            filterListCity = []
         }
-        searchCount = "\(filterListCity.count)/\(cityList.count)"
-    }
-    
-    func fetchCities() {
-        cityList = service.fetchCities()
-        debugPrint("City Count: \(cityList.count)")
     }
 }

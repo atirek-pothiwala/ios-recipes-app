@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+    
+    init() {
+        UINavigationBar.setDefaultTheme()
+        UITabBar.setDefaultTheme()
     }
+    
+    var body: some View {
+        SplashPage()
+     }
 }
 
 #Preview {

@@ -7,63 +7,52 @@
 
 import SwiftUI
 
-struct InstructionsView: View {
+typealias VariationItem = (title: String, subtitle: String)
+
+struct VariationsView: View {
     
-    let instructions: [String]
+    let list: [VariationItem]
     
-    init(_ instructions: [String]) {
-        self.instructions = instructions
+    init(_ list: [VariationItem]) {
+        self.list = list
     }
     
     var body: some View {
         VStack(spacing: 15) {
-            Text("Instructions")
-                .frame(maxWidth: .infinity, alignment: .center)
-                .font(.system(size: 20, weight: .semibold))
-                .foregroundStyle(.black)
-                .padding(.top, 5)
-            
-            VStack {
-                ForEach(0..<self.instructions.count, id: \.self) { index in
-                    VStack(alignment: .leading, spacing: 0) {
-                        Text("Step \(index + 1)")
-                            .font(.system(size: 15, weight: .semibold))
-                            .foregroundStyle(.black)
-                        
-                        Text(self.instructions[index])
-                            .font(.system(size: 15, weight: .regular))
-                            .foregroundStyle(.black)
-                            .padding(.top, 5)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 15)
-                    .padding(.vertical, 10)
-                    
-                    if index < self.instructions.count - 1 {
-                        Rectangle()
-                            .foregroundStyle(.gray.opacity(0.15))
-                            .frame(maxWidth: .infinity, maxHeight: 1)
-                    }
-                }
+            HStack(alignment: .center) {
+                Image(systemName: "swirl.circle.righthalf.filled.inverse")
+                    .font(.system(size: 24, weight: .semibold))
+                    .foregroundStyle(.black)
+                
+                Text("Variations")
+                    .font(.system(size: 24, weight: .semibold))
+                    .foregroundStyle(.black)
             }
-            .padding(.vertical, 10)
-            .cornerRadius(15, antialiased: true)
-            .overlay(
-                RoundedRectangle(cornerRadius: 15)
-                    .stroke(Color.gray.opacity(0.15), lineWidth: 1)
-            )
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+            ForEach(list, id: \.title) { item in
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(item.0)
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(.black)
+                    
+                    Text(item.1)
+                        .font(.system(size: 15, weight: .regular))
+                        .foregroundStyle(.black)
+                        .padding(.top, 5)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
         }
+        .padding(.all, 20)
+        .background(.yellow)
+        .cornerRadius(15, antialiased: true)
         .frame(maxWidth: .infinity)
         .padding(.all)
+        
     }
 }
 
 #Preview {
-    let instructions: [String] = [
-        "Whisk eggs, water, salt and pepper.",
-        "Melt butter in an 8-inch (20 cm) nonstick frying pan over medium heat. Pour in egg mixture. As eggs set around edge of pan, with spatula, gently push cooked portions toward centre of skillet. Tilt and rotate skillet to allow uncooked egg to flow into empty spaces.",
-        "When eggs are almost set on surface but still look moist, cover half of omelette with filling. Slip spatula under unfilled side; fold over onto filled half.",
-        "Cook for a minute, then slide omelette onto plate."
-    ]
-    InstructionsView(instructions)
+    VariationsView(Constants.shared.variations)
 }

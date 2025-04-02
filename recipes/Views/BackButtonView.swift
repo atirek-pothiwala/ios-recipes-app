@@ -8,11 +8,30 @@
 import SwiftUI
 
 struct BackButtonView: View {
+    var title: String
+    var action: () -> Void
+    
+    init(_ title: String, _ action: @escaping () -> Void) {
+        self.title = title
+        self.action = action
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button {
+            action()
+        } label: {
+            Image(systemName: "chevron.backward")
+                .foregroundStyle(.white)
+                .font(.system(size: 18))
+            Text(title)
+                .foregroundStyle(.white)
+                .font(.system(size: 18))
+        }
     }
 }
 
 #Preview {
-    BackButtonView()
+    BackButtonView("Login") {
+        
+    }
 }

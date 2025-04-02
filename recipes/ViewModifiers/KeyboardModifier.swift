@@ -7,61 +7,50 @@
 
 import SwiftUI
 
-typealias OnClick = () -> Void
+struct KeyboardModifier: ViewModifier {
 
-struct NavigationBarModifier: ViewModifier {
+    typealias OnClick = () -> Void
     
-    var title: String
-    var onBack: OnClick?
-    var onNextField: OnClick?
-    var onPrevField: OnClick?
-    var isNextField: Bool
-    var isPrevField: Bool
+    var onClose: OnClick?
+    var onNext: OnClick?
+    var onPrev: OnClick?
     
-    init(_ title: String,
-         onBack: OnClick? = nil,
-         onNextField: OnClick? = nil,
-         isNextField: Bool = false,
-         onPrevField: OnClick? = nil,
-         isPrevField: Bool = false) {
-        self.title = title
-        self.onBack = onBack
-        self.onNextField = onNextField
-        self.onPrevField = onPrevField
-        self.isNextField = isNextField
-        self.isPrevField = isPrevField
-    }
+    init(onClose: OnClick? = nil,
+         onNext: OnClick? = nil,
+         onPrev: OnClick? = nil) {
+        self.onClose = onClose
+        self.onNext = onNext
+        self.onPrev = onPrev
+}
     
     func body(content: Content) -> some View {
         content
-            .navigationTitle(title)
-            .navigationBarBackButtonHidden()
-            .navigationBarTitleDisplayMode(.large)
             .toolbar {
-                if (onBack != nil) {
-                    ToolbarItem(placement: .topBarLeading) {
-                        BackButtonView("Login") {
-                            onBack?()
-                        }
-                    }
-                }
-                
                 ToolbarItemGroup(placement: .keyboard) {
+                    
+                    Button {
+                        onClose?()
+                    } label: {
+                        Text("Close")
+                    }
+                    .foregroundStyle(.black)
+                    .disabled(onClose == nil)
+                    
                     Spacer()
                     
                     Button {
-                        onNextField?()
+                        onPrev?()
                     } label: {
                         Image(systemName: "chevron.up")
-                    }.disabled(!isNextField)
+                    }.disabled(onPrev == nil)
                     
                     Button {
-                        onPrevField?()
+                        onNext?()
                     } label: {
                         Image(systemName: "chevron.down")
-                    }.disabled(!isPrevField)
-
+                    }.disabled(onNext == nil)
                 }
             }
+            .ignoresSafeArea(.keyboard, edges: .all)
     }
 }
