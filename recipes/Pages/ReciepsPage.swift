@@ -7,89 +7,43 @@
 
 import SwiftUI
 
-typealias RecipeItem = (
-    title: String,
-    image: String,
-    prepTime: String,
-    cookTime: String,
-    serves: Int
-)
-
 struct ReciepsPage: View {
-    @State var sizeImage: CGSize = .zero
+    
+    @StateObject private var viewModel = RecipesVM()
+    @State var imageSize: CGSize = .zero
         
     var body: some View {
         VStack(alignment: .leading) {
             ToolbarView {
                 print("Open Filter")
             }
-            
-            List(Constants.shared.recipes, id: \.title) { item in
-                HStack(alignment: .top, spacing: 15) {
-                    Image(item.image)
-                        .resizable()
-                        .frame(
-                            width: sizeImage.width,
-                            height: sizeImage.height
-                        )
-                        .cornerRadius(15, antialiased: true)
-                        .scaledToFit()
-                    
-                    VStack(alignment: .leading, spacing: 7.5) {
-                        
-                        Text(item.title)
-                            .foregroundStyle(Color.accentColor)
-                            .font(.system(size: 24, weight: .semibold))
-                        
-                        Rectangle()
-                            .foregroundStyle(.gray.opacity(0.2))
-                            .frame(height: 1)
-                            .frame(maxWidth: .infinity)
-                            .padding(.bottom, 5)
-                        
-                        PrepTimeView(
-                            item.prepTime,
-                            direction: .leading,
-                            textColor: .accentColor,
-                            shadowColor: .clear
-                        )
-                        
-                        CookTimeView(
-                            item.cookTime,
-                            direction: .leading,
-                            textColor: .accentColor,
-                            shadowColor: .clear
-                        )
-                        
-                        ServesView(
-                            "\(item.serves)",
-                            direction: .leading,
-                            textColor: .accentColor,
-                            shadowColor: .clear
-                        )
-                    }
-                    .frame(
-                        maxWidth: .infinity,
-                        alignment: .leading
-                    )
+            if viewModel.loading {
+                ProgressView("Loading Recipes")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                List($viewModel.list, id: \.id) { $item in
+                    RecipeCell(item, imageSize)
                 }
-                .modifier(RecipeCellModifier())
-            }
-            .listRowSpacing(15)
-            .scrollContentBackground(.hidden)
-            .scrollIndicators(.never)
-            .listStyle(.plain)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .onGeometryChange(for: CGRect.self) { proxy in
-                proxy.frame(in: .global)
-            } action: { newValue in
-                sizeImage = CGSize(
-                    width: newValue.width * 0.25,
-                    height: newValue.width * 0.4
-                )
+                .listRowSpacing(15)
+                .scrollContentBackground(.hidden)
+                .scrollIndicators(.never)
+                .listStyle(.plain)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .refreshable {
+                    Task {
+                        viewModel.fetch(loader: false)
+                    }
+                }
+                .renderSize(ratio: CGSize(width: 0.25, height: 0.4)) {
+                    size in
+                    imageSize = size
+                }
             }
         }
         .safeAreaPadding()
+        .onAppear {
+            viewModel.fetch()
+        }
     }
 }
 

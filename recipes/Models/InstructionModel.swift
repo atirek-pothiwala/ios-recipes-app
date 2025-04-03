@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct InstructionModel: Codable {
+struct InstructionModel: Identifiable, Codable {
     
     /*
          {
@@ -17,8 +17,8 @@ struct InstructionModel: Codable {
          }
      */
     
-    let id : Int
-    let stepNumber: String
+    let id: Int
+    let stepNumber: Int
     let description: String
 
     enum CodingKeys: String, CodingKey {
@@ -30,7 +30,7 @@ struct InstructionModel: Codable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decode(Int.self, forKey: .id)
-        stepNumber = try values.decode(String.self, forKey: .stepNumber)
+        stepNumber = try values.decode(Int.self, forKey: .stepNumber)
         description = try values.decode(String.self, forKey: .description)
     }
 

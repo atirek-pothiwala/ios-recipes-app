@@ -28,7 +28,11 @@ struct SplashPage: View {
     
     var btnGetStarted: some View {
         NavigationLink {
-            LoginPage()
+            if Constants.shared.token.isEmpty {
+                LoginPage()
+            } else {
+                TabPage()
+            }
         } label: {
             Image(systemName: "chevron.right")
                 .modifier(ColorEffectModifier(.red))

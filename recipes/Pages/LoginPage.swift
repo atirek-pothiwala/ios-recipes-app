@@ -9,54 +9,52 @@ import SwiftUI
 
 struct LoginPage: View {
         
-    @StateObject private var viewModel = AccountVM()
-    @State private var email: String = ""
-    @State private var password: String = ""
-    
+    @State private var path = NavigationPath()
+    @StateObject private var viewModel = LoginVM()
     @FocusState private var focusedInput: Field?
-    
 
     var body: some View {
-        ScrollView(.vertical) {
-            VStack(alignment: .trailing, spacing: 15) {
-                LogoView()
-                
-                Text("Enter you email address and password for login. Explore food recipes 😋")
-                    .foregroundStyle(.white)
-                    .multilineTextAlignment(.leading)
-                    .font(.system(size: 18, weight: .regular))
-                    .frame(maxWidth: .infinity)
-                
-                tfEmail
-                tfPassword
-                
-                HStack(alignment: .center) {
-                    btnRegister
-                    btnLogin
+        NavigationStack(path: $path) {
+            ScrollView(.vertical) {
+                VStack(alignment: .trailing, spacing: 15) {
+                    LogoView()
+                    
+                    Text("Enter you email address and password for login. Explore food recipes 😋")
+                        .foregroundStyle(.white)
+                        .multilineTextAlignment(.leading)
+                        .font(.system(size: 18, weight: .regular))
+                        .frame(maxWidth: .infinity)
+                    
+                    tfEmail
+                    tfPassword
+                    
+                    HStack(alignment: .center) {
+                        btnRegister
+                        btnLogin
+                    }
+                    
+                    btnForgotPassword
                 }
-                
-                btnForgotPassword
+            }
+            .frame(maxWidth: .infinity)
+            .background(Color.accentColor)
+            .navigationBarBackButtonHidden()
+            .applyKeyboardNavigation($focusedInput)
+            .safeAreaPadding()
+            .navigationDestination(for: Route.self) { route in
+                if route == .dashboard {
+                    TabPage()
+                } else if route == .register {
+                    RegisterPage()
+                } else if route == .forgotPassword {
+                    ForgotPasswordPage()
+                }
             }
         }
-        .frame(maxWidth: .infinity)
-        .background(Color.accentColor)
-        .navigationBarBackButtonHidden()
-        .modifier(
-            KeyboardModifier(
-                onClose: dismissKeyboard,
-                onNext: hasReachedEnd() ? nil : nextField,
-                onPrev: hasReachedStart() ? nil : prevField
-            )
-        )
-        .safeAreaPadding()
-        .onAppear {
-            viewModel.fetchAccounts()
-        }
-
     }
     
     var tfEmail: some View {
-        TextField(text: $email) {
+        TextField(text: $viewModel.email) {
             Text("Email Address")
                 .foregroundStyle(.white.opacity(0.25))
         }
@@ -72,7 +70,7 @@ struct LoginPage: View {
     }
     
     var tfPassword: some View {
-        SecureField(text: $password) {
+        PasswordTextField(text: $viewModel.password) {
             Text("Password")
                 .foregroundStyle(.white.opacity(0.25))
         }
@@ -88,8 +86,8 @@ struct LoginPage: View {
     }
     
     var btnForgotPassword: some View {
-        NavigationLink {
-            ForgotPasswordPage()
+        Button {
+            self.path.append(Route.forgotPassword)
         } label: {
             Text("Forgot Password?")
         }
@@ -99,8 +97,10 @@ struct LoginPage: View {
     }
     
     var btnLogin: some View {
-        NavigationLink {
-            TabPage()
+        Button {
+            viewModel.login {
+                self.path.append(Route.dashboard)
+            }
         } label: {
             Image(systemName: "chevron.right")
         }
@@ -111,8 +111,8 @@ struct LoginPage: View {
     }
     
     var btnRegister: some View {
-        NavigationLink {
-            RegisterPage()
+        Button {
+            self.path.append(Route.register)
         } label: {
             Text("New Account")
         }
@@ -129,33 +129,13 @@ private extension LoginPage {
         case email
         case password
     }
-    
-    func dismissKeyboard() {
-        self.focusedInput = nil
-    }
-    
-    func nextField() {
-        guard let currentInput = focusedInput,
-        let lastIndex = Field.allCases.last?.rawValue else { return }
-        
-        let index = min(currentInput.rawValue + 1, lastIndex)
-        self.focusedInput = Field(rawValue: index)
-    }
-    
-    func prevField() {
-        guard let currentInput = focusedInput,
-        let firstIndex = Field.allCases.first?.rawValue else { return }
-        
-        let index = max(currentInput.rawValue - 1, firstIndex)
-        self.focusedInput = Field(rawValue: index)
-    }
-    
-    func hasReachedStart() -> Bool {
-        self.focusedInput == Field.allCases.first
-    }
-    
-    func hasReachedEnd() -> Bool {
-        self.focusedInput == Field.allCases.last
+}
+
+private extension LoginPage {
+    enum Route: Hashable {
+        case dashboard
+        case register
+        case forgotPassword
     }
 }
 

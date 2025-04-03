@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AccountModel: Codable {
+struct AccountModel: Identifiable, Codable {
     
     /*
         {

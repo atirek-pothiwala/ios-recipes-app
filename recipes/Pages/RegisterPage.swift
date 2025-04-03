@@ -46,13 +46,7 @@ struct RegisterPage: View {
         .modifier(NavigationBarModifier("Create Account") {
             dismiss()
         })
-        .modifier(
-            KeyboardModifier(
-                onClose: dismissKeyboard,
-                onNext: hasReachedEnd() ? nil : nextField,
-                onPrev: hasReachedStart() ? nil : prevField
-            )
-        )
+        .applyKeyboardNavigation($focusedInput)
         .safeAreaPadding()
     }
     

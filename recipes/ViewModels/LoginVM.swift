@@ -17,11 +17,11 @@ class LoginVM: ObservableObject {
     @Published var error: String = ""
     
     func login(_ completion: @escaping () -> Void) {
-        service.login(email: self.email, password: self.password) { [weak self] result in
+        service.login(fields: (email, password)) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let token):
-                    print("Token: \(token)")
+                    Constants.shared.token = token
                     completion()
                 case .failure(let error):
                     print("Error: \(error.localizedDescription)")

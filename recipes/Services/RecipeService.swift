@@ -7,81 +7,48 @@
 
 import Foundation
 
-typealias LoginFields = (email: String, password: String)
-typealias RegisterFields = (firstName: String, lastName: String, email: String, password: String)
+class RecipeService {
+    func list(_ completion: @escaping (Result<[RecipeModel], Error>) -> Void) {
+        guard let url = URL(string: Constants.BASE_URL + Constants.LIST_RECIPE_URL) else {
+            completion(.failure(NSError(domain: "Invalid URL", code: 404, userInfo: nil)))
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(Constants.shared.token)", forHTTPHeaderField: "Authorization")
+                
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(NSError(domain: "Data Not Found", code: 404, userInfo: nil)))
+                return
+            }
 
-class AccountService {
-    func login(fields: LoginFields, _ completion: @escaping (Result<String, Error>) -> Void) {
-        guard let url = URL(string: Constants.BASE_URL + Constants.LOGIN_URL) else {
-            completion(.failure(NSError(domain: "Invalid URL", code: 404, userInfo: nil)))
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        let jsonRequest: [String: Any] = [
-            "email": fields.email,
-            "password": fields.password
-        ]
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: jsonRequest, options: [])
-        } catch {
-            completion(.failure(NSError(domain: "Bad Request", code: 400, userInfo: nil)))
-            return
-        }
-        debugPrint("Request: \(request.url!.absoluteString)")
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
+            do {
+//                if let json = String(data: data, encoding: .utf8) {
+//                    debugPrint(json)
+//                }
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let list = try decoder.decode([RecipeModel].self, from: data)
+                
+                completion(.success(list))
+            } catch let DecodingError.keyNotFound(key, context) {
+                print("❌ Missing key: \(key.stringValue) - \(context.debugDescription)")
+            } catch let DecodingError.typeMismatch(type, context) {
+                print("❌ Type mismatch: \(type) - \(context.debugDescription)")
+            } catch let DecodingError.valueNotFound(type, context) {
+                print("❌ Missing value: \(type) - \(context.debugDescription)")
+            } catch {
                 completion(.failure(error))
-                return
             }
             
-            guard data != nil,
-                  let token = String(data: data!, encoding: .utf8) else {
-                completion(.failure(NSError(domain: "Data Not Found", code: 404, userInfo: nil)))
-                return
-            }
-            completion(.success(token))
         }.resume()
     }
-    
-    func register(fields: RegisterFields, _ completion: @escaping (Result<String, Error>) -> Void) {
-        guard let url = URL(string: Constants.BASE_URL + Constants.LOGIN_URL) else {
-            completion(.failure(NSError(domain: "Invalid URL", code: 404, userInfo: nil)))
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        let jsonRequest: [String: Any] = [
-            "firstName": fields.firstName,
-            "lastName": fields.lastName,
-            "email": fields.email,
-            "password": fields.password
-        ]
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: jsonRequest, options: [])
-        } catch {
-            completion(.failure(NSError(domain: "Bad Request", code: 400, userInfo: nil)))
-            return
-        }
-        debugPrint("Request: \(request.url!.absoluteString)")
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            
-            guard data != nil,
-                  let token = String(data: data!, encoding: .utf8) else {
-                completion(.failure(NSError(domain: "Data Not Found", code: 404, userInfo: nil)))
-                return
-            }
-            completion(.success(token))
-        }.resume()
-    }
+
 }

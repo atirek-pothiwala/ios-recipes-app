@@ -15,11 +15,23 @@ class Constants {
     
     private init() {}
     
-    static let BASE_URL: String = "http://localhost:3000/api/"
-    static let LOGIN_URL: String = "accounts/login"
-    static let REGISTER_URL: String = "accounts/register"
-    static let PROFILE_URL: String = "accounts/profile"
-    static let UPLOAD_URL: String = "accounts/upload"
+    static let BASE_URL: String = "http://localhost:3000/api"
+    static let LOGIN_URL: String = "/accounts/login"
+    static let REGISTER_URL: String = "/accounts/register"
+    static let PROFILE_URL: String = "/accounts/profile"
+    static let UPLOAD_URL: String = "/accounts/upload"
+    static let LIST_RECIPE_URL: String = "/recipes/list"
+    
+    static let IMAGE_BASE_URL: String = "http://localhost:3000"
+    
+    var token: String {
+        get {
+            return UserDefaults.standard.string(forKey: "token") ?? ""
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "token")
+        }
+    }
     
     
     let description: String = "Omelettes are infinitely customizable! This recipe is perfect for busy weekdays, but below we offer a few variations that can be delicious when you have some more time to play around in the kitchen."
@@ -77,15 +89,4 @@ class Constants {
         NutritionFact("Protein", "12 g"),
         NutritionFact("Sodium", "207 mg"),
     ]
-    
-    let recipes: [RecipeItem] = [
-        RecipeItem("Burger", "burger", "10-15 mins", "8-12 mins", 1),
-        RecipeItem("Espresso", "coffee", "2-3 mins", "30 sec", 1),
-        RecipeItem("Frankie", "frankie", "10-15 mins", "10-15 mins", 1),
-        RecipeItem("French Fries", "french-fries", "10-15 mins", "10-12 mins", 2),
-        RecipeItem("Omelette", "omelette", "2 mins", "4 mins", 1),
-        RecipeItem("Pav Bhaji", "pav-bhaji", "15-20 mins", "20-25 mins", 3),
-        RecipeItem("Vada Pav", "vada-pav", "15-20 mins", "15-20 mins", 1)
-    ]
-
 }
