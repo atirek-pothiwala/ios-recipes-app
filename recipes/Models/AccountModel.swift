@@ -25,6 +25,7 @@ struct AccountModel: Identifiable, Codable {
     let firstName: String
     let lastName: String
     let email: String
+    let password: String
     let createdAt: Date
   
 
@@ -34,6 +35,7 @@ struct AccountModel: Identifiable, Codable {
         case firstName = "first_name"
         case lastName = "last_name"
         case email = "email"
+        case password = "password"
         case createdAt = "created_at"
     }
 
@@ -44,6 +46,7 @@ struct AccountModel: Identifiable, Codable {
         firstName = try values.decode(String.self, forKey: .firstName)
         lastName = try values.decode(String.self, forKey: .lastName)
         email = try values.decode(String.self, forKey: .email)
+        password = try values.decode(String.self, forKey: .password)
         
         let isoCreatedAt = try values.decode(String.self, forKey: .createdAt)
         

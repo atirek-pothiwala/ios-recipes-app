@@ -8,41 +8,38 @@
 import SwiftUI
 
 struct SplashPage: View {
+    
+    @EnvironmentObject var navigator: Navigator
+    @State private var colorEffectProgress: CGFloat = 0
         
     var body: some View {
-        NavigationStack {
-            VStack(alignment: .center) {
-                Spacer()
-                
-                LogoView()
-                
-                Spacer()
-                
-                btnGetStarted
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.accentColor)
-            .safeAreaPadding()
+        VStack(alignment: .center) {
+            Spacer()
+            
+            LogoView()
+            
+            Spacer()
+            
+            btnGetStarted
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.accent)
+        .safeAreaPadding()
     }
     
     var btnGetStarted: some View {
-        NavigationLink {
+        Button {
             if Constants.shared.token.isEmpty {
-                LoginPage()
+                navigator.push(Route.login)
             } else {
-                TabPage()
+                navigator.push(Route.dashboard)
             }
         } label: {
             Image(systemName: "chevron.right")
-                .modifier(ColorEffectModifier(.red))
+                .applyColorEffect(progress: $colorEffectProgress, from: .red, to: .black)
         }
         .font(.system(size: 24, weight: .bold))
         .padding(.all, 24)
         .background(.white, in: .circle)
     }
-}
-
-#Preview {
-    SplashPage()
 }

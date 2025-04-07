@@ -1,6 +1,19 @@
+//
+//  ToastsView.swift
+//  recipes
+//
+//  Created by Atirek Pothiwala on 06/04/25.
+//
+
+import SwiftUI
+
 struct ToastsView: View {
-    @Binding var toasts: [Toast]
+    @Binding var toasts: [ToastModel]
     @State private var isExpanded: Bool = false
+    
+    init(_ toasts: Binding<[ToastModel]>) {
+        _toasts = toasts
+    }
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -40,7 +53,7 @@ struct ToastsView: View {
                 }
             }
             .onTapGesture { isExpanded.toggle() }
-            .padding(.bottom, 15)
+            .padding(.all, 15)
         }
         .animation(.bouncy, value: isExpanded)
         .onChange(of: toasts.isEmpty) { _, isEmpty in

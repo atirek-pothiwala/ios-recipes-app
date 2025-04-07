@@ -9,14 +9,10 @@ import SwiftUI
 
 struct RegisterPage: View {
     
-    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var toastor: Toastor
+    @EnvironmentObject var navigator: Navigator
     
-    @State private var firstName: String = ""
-    @State private var lastName: String = ""
-    @State private var email: String = ""
-    @State private var password: String = ""
-    @State private var confirmPassword: String = ""
-
+    @StateObject private var viewModel = RegisterVM()
     @FocusState private var focusedInput: Field?
     
     var body: some View {
@@ -42,16 +38,17 @@ struct RegisterPage: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .background(Color.accentColor)
+        .background(Color.accent)
         .modifier(NavigationBarModifier("Create Account") {
-            dismiss()
+            navigator.pop()
         })
         .applyKeyboardNavigation($focusedInput)
+        .applyToast(toastor, viewModel.error, of: .error)
         .safeAreaPadding()
     }
     
     var tfFirstName: some View {
-        TextField(text: $email) {
+        TextField(text: $viewModel.firstName) {
             Text("First Name")
                 .foregroundStyle(.white.opacity(0.25))
         }
@@ -67,7 +64,7 @@ struct RegisterPage: View {
     }
     
     var tfLastName: some View {
-        TextField(text: $email) {
+        TextField(text: $viewModel.lastName) {
             Text("Last Name")
                 .foregroundStyle(.white.opacity(0.25))
         }
@@ -83,7 +80,7 @@ struct RegisterPage: View {
     }
     
     var tfEmail: some View {
-        TextField(text: $email) {
+        TextField(text: $viewModel.email) {
             Text("Email Address")
                 .foregroundStyle(.white.opacity(0.25))
         }
@@ -99,7 +96,7 @@ struct RegisterPage: View {
     }
     
     var tfPassword: some View {
-        PasswordTextField(text: $password) {
+        PasswordTextField(text: $viewModel.password) {
             Text("Password")
                 .foregroundStyle(.white.opacity(0.25))
         }
@@ -115,7 +112,7 @@ struct RegisterPage: View {
     }
     
     var tfConfirmPassword: some View {
-        PasswordTextField(text: $confirmPassword) {
+        PasswordTextField(text: $viewModel.confirmPassword) {
             Text("Confirm Password")
                 .foregroundStyle(.white.opacity(0.25))
         }
@@ -131,8 +128,10 @@ struct RegisterPage: View {
     }
     
     var btnRegister: some View {
-        NavigationLink {
-            TabPage()
+        Button {
+            viewModel.register {
+                navigator.push(Route.dashboard)
+            }
         } label: {
             Image(systemName: "chevron.right")
         }
@@ -141,6 +140,7 @@ struct RegisterPage: View {
         .padding(.horizontal, 24)
         .padding(.vertical, 16)
         .background(.white, in: .circle)
+        .disabled(!viewModel.validate)
     }
 
 }
@@ -153,38 +153,8 @@ private extension RegisterPage {
         case password
         case confirmPassword
     }
-    
-    func dismissKeyboard() {
-        self.focusedInput = nil
-    }
-    
-    func nextField() {
-        guard let currentInput = focusedInput,
-        let lastIndex = Field.allCases.last?.rawValue else { return }
-        
-        let index = min(currentInput.rawValue + 1, lastIndex)
-        self.focusedInput = Field(rawValue: index)
-    }
-    
-    func prevField() {
-        guard let currentInput = focusedInput,
-        let firstIndex = Field.allCases.first?.rawValue else { return }
-        
-        let index = max(currentInput.rawValue - 1, firstIndex)
-        self.focusedInput = Field(rawValue: index)
-    }
-    
-    func hasReachedStart() -> Bool {
-        self.focusedInput == Field.allCases.first
-    }
-    
-    func hasReachedEnd() -> Bool {
-        self.focusedInput == Field.allCases.last
-    }
 }
 
 #Preview {
-    NavigationStack {
-        RegisterPage()
-    }
+    RegisterPage()
 }

@@ -14,15 +14,19 @@ class Constants {
     }()
     
     private init() {}
-    
+
+    static let IMAGE_BASE_URL: String = "http://localhost:3000"
     static let BASE_URL: String = "http://localhost:3000/api"
+    
     static let LOGIN_URL: String = "/accounts/login"
     static let REGISTER_URL: String = "/accounts/register"
-    static let PROFILE_URL: String = "/accounts/profile"
+    static let PROFILE_ACCOUNT_URL: String = "/accounts/profile"
+    static let CHANGE_PASSWORD_URL: String = "/accounts/changePassword"
     static let UPLOAD_URL: String = "/accounts/upload"
+    static let DELETE_ACCOUNT_URL: String = "/accounts/delete"
     static let LIST_RECIPE_URL: String = "/recipes/list"
-    
-    static let IMAGE_BASE_URL: String = "http://localhost:3000"
+    static let DETAIL_RECIPE_URL: String = "/recipes/detail"
+
     
     var token: String {
         get {
@@ -33,24 +37,15 @@ class Constants {
         }
     }
     
-    
-    let description: String = "Omelettes are infinitely customizable! This recipe is perfect for busy weekdays, but below we offer a few variations that can be delicious when you have some more time to play around in the kitchen."
-    
-    let ingredients: [String] = [
-        "2 eggs",
-        "1 tbsp (15 mL) water",
-        "Pinch salt",
-        "Pinch pepper",
-        "1 tbsp (15 mL) butter or oil",
-        "Filling ingredients"
-    ]
-    
-    let instructions: [String] = [
-        "Whisk eggs, water, salt and pepper.",
-        "Melt butter in an 8-inch (20 cm) nonstick frying pan over medium heat. Pour in egg mixture. As eggs set around edge of pan, with spatula, gently push cooked portions toward centre of skillet. Tilt and rotate skillet to allow uncooked egg to flow into empty spaces.",
-        "When eggs are almost set on surface but still look moist, cover half of omelette with filling. Slip spatula under unfilled side; fold over onto filled half.",
-        "Cook for a minute, then slide omelette onto plate."
-    ]
+    var favourites: [Int] {
+        get {
+            return UserDefaults.standard.array(forKey: "favourites") as? [Int] ?? []
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "favourites")
+        }
+    }
+        
     
     let variations: [VariationItem] = [
         VariationItem(
@@ -65,17 +60,6 @@ class Constants {
             "Mushroom and Spinach Omelette",
             "Filling ingredients: 3 tbsp (45 mL) each sauteed mushrooms, wilted spinach (or thawed and well-drained frozen spinach), sliced green onions, and shredded old Cheddar cheese."
         )
-    ]
-    
-    let tips: [String] = [
-        "Nutrition facts are based on a 2 egg omelette without filling.",
-        "Using the proper skillet or pan is important to successful omelette making. The ideal skillet for a 1, 2 or 3-egg omelette is about 8 inches (20 cm) in diameter at the base. It should be shallow with sloping sides to make it easier to slide the omelette out of the skillet and onto a plate.",
-        "An omelette can be made quickly and easier if the skillet is hot when the egg mixture is added. The skillet is hot enough when a drop of water rolls around instead of bursting into steam immediately.",
-        "Preparing individual omelettes, rather than one large one, will result in lighter and fluffier omelettes that are easier to handle.",
-        "The Perfect Omelette recipe can be multiplied for as many servings as you need. Use 1/2 cup (125 mL) of egg mixture for each 2-egg omelette and 3/4 cup (175 mL) for a 3-egg omelette.",
-        "The fewer eggs, the quicker it will cook, so you can use a smaller skillet for a one- or two-egg omelette and one that measures 8-inches (20 cm) at the base for a 3-egg omelette.",
-        "You can use cooking spray in place of the butter or oil.",
-        "Covering the folded omelette and cooking for an extra minute helps to heat up the filling, melt any cheese, and finish cooking any remaining undercooked egg. This step is optional if your filling doesn’t require heating and the egg already appears cooked to your liking."
     ]
     
     let nutritionFacts: [NutritionFact] = [

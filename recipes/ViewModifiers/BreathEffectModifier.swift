@@ -13,9 +13,8 @@ struct BreathEffectModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .scaleEffect(animate ? 1.25 : 1)
-            .animation(Animation.easeInOut(duration: 1).repeatForever(autoreverses: true), value: animate)
             .onAppear {
-                withTransaction(Transaction(animation: nil)) {
+                withAnimation(.easeInOut(duration: 1).repeatForever(autoreverses: true)) {
                     animate = true
                 }
             }

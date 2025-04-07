@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct InstructionModel: Identifiable, Codable {
+struct InstructionModel: Identifiable, Hashable, Codable {
     
     /*
          {

@@ -19,48 +19,27 @@ struct ImageView: View {
         return AsyncImage(url: imageUrl) { phase in
             switch phase {
             case .empty:
-                ProgressView()
+                progressView
             case .success(let image):
                 image
                     .resizable()
-                    .scaledToFit()
-                    .aspectRatio(contentMode: .fill)
             case .failure:
-                EmptyView()
+                placeHolderView
             @unknown default:
-                EmptyView()
+                placeHolderView
             }
         }
     }
     
-    @State private var image: UIImage? = nil
-    
-    var sessionImageView: some View {
-        Group {
-            if let image = image {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .aspectRatio(contentMode: .fill)
-            } else {
-                ProgressView()
-                    .onAppear {
-                        loadImage()
-                    }
-            }
-        }
+    var progressView: some View {
+        ProgressView()
+            .tint(Color.accent)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
-    func loadImage() {
-        guard let imageUrl = URL(string: Constants.IMAGE_BASE_URL + url) else {
-            return
-        }
-        URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
-            if let data = data, let uiImage = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    self.image = uiImage
-                }
-            }
-        }.resume()
+    var placeHolderView: some View {
+        EmptyView()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
+    
 }

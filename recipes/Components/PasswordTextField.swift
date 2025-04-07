@@ -11,11 +11,13 @@ struct PasswordTextField<Label> : View where Label : View {
     
     @Binding private var text: String
     let label: () -> Label
+    let tint: Color
     
     @State var showPassword: Bool = false
         
-    init(text: Binding<String>, label: @escaping () -> Label) {
+    init(text: Binding<String>, tint: Color = Color.white.opacity(0.5), label: @escaping () -> Label) {
         _text = text
+        self.tint = tint
         self.label = label
     }
     
@@ -35,7 +37,7 @@ struct PasswordTextField<Label> : View where Label : View {
                 } label: {
                     Image(systemName: showPassword ? "eye.fill" : "eye.slash.fill")
                         .scaledToFit()
-                        .foregroundStyle(.white.opacity(0.5))
+                        .foregroundStyle(tint)
                 }
             }
         }
@@ -53,5 +55,5 @@ struct PasswordTextField<Label> : View where Label : View {
         .safeAreaPadding(.all)
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .background(Color.accentColor)
+    .background(Color.accent)
 }

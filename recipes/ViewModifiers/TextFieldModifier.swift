@@ -10,16 +10,20 @@ import SwiftUI
 struct TextFieldModifier: ViewModifier {
     
     private var background: Color
+    private var textColor: Color
+    private var hintColor: Color
     
-    init(background: Color = .black.opacity(0.15)) {
+    init(textColor: Color = .white, hintColor: Color = .white, background: Color = .black.opacity(0.15)) {
+        self.textColor = textColor
+        self.hintColor = hintColor
         self.background = background
     }
     
     func body(content: Content) -> some View {
         content
             .font(.system(size: 18, weight: .regular))
-            .foregroundStyle(.white)
-            .tint(.white)
+            .foregroundStyle(textColor)
+            .tint(hintColor)
             .frame(maxWidth: .infinity)
             .frame(height: 35)
             .padding()

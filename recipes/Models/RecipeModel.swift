@@ -1,5 +1,5 @@
 //
-//  RecipeDetailModel.swift
+//  RecipeModel.swift
 //  recipes
 //
 //  Created by Atirek Pothiwala on 31/03/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RecipeDetailModel: Identifiable, Hashable, Codable {
+struct RecipeModel: Identifiable, Hashable, Codable {
     
     /*
         {
@@ -20,28 +20,7 @@ struct RecipeDetailModel: Identifiable, Hashable, Codable {
              "prepTime": 2,
              "cookTime": 4,
              "servings": 1,
-             "createdAt": "2025-04-03T18:30:00.000Z",
-             "ingredients": [
-                 {
-                     "id": 27,
-                     "name": "Ingredients 1",
-                     "quantity": "1",
-                     "unit": "gm"
-                 }
-             ],
-             "instructions": [
-                 {
-                     "id": 25,
-                     "stepNumber": 1,
-                     "description": "Instruction 1"
-                 }
-             ],
-             "tips": [
-                 {
-                     "id": 36,
-                     "description": "Tips 1"
-                 }
-             ]
+             "createdAt": "2025-04-03T18:30:00.000Z"
          }
      */
     
@@ -55,9 +34,6 @@ struct RecipeDetailModel: Identifiable, Hashable, Codable {
     let cookingTime: Int
     let servings: Int
     let createdAt: Date
-    let ingredients: [IngredientModel]
-    let instructions: [InstructionModel]
-    let tips: [TipModel]
   
     var preparationTimeFormatted: String {
         return "\(preparationTime) mins"
@@ -78,9 +54,6 @@ struct RecipeDetailModel: Identifiable, Hashable, Codable {
         case cookingTime = "cookTime"
         case servings = "servings"
         case createdAt = "createdAt"
-        case ingredients = "ingredients"
-        case instructions = "instructions"
-        case tips = "tips"
     }
 
     init(from decoder: Decoder) throws {
@@ -99,10 +72,6 @@ struct RecipeDetailModel: Identifiable, Hashable, Codable {
         let isoDateFormatter = ISO8601DateFormatter()
         isoDateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
         createdAt = isoDateFormatter.date(from: isoCreatedAt)!
-        
-        ingredients = try values.decode([IngredientModel].self, forKey: .ingredients)
-        instructions = try values.decode([InstructionModel].self, forKey: .instructions)
-        tips = try values.decode([TipModel].self, forKey: .tips)
     }
 
 }

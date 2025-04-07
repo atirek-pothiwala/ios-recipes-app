@@ -1,17 +1,41 @@
+//
+//  RootNavigator.swift
+//  recipes
+//
+//  Created by Atirek Pothiwala on 04/04/25.
+//
+
+import SwiftUI
+
 struct RootNavigator: View {
-    @State private var path = NavigationPath()
+    
+    @StateObject private var navigator = Navigator()
+    @StateObject private var toastor = Toastor()
 
     var body: some View {
-        NavigationStack(path: $path) {
-            LoginPage(path: $path)
+        NavigationStack(path: $navigator.path) {
+            SplashPage()
                 .navigationDestination(for: Route.self) { route in
                     switch route {
+                    case .splash:
+                        SplashPage()
+                    case .login:
+                        LoginPage()
                     case .register:
-                        RegisterPage(path: $path)
-                    case .mainTab:
-                        MainTabView()
+                        RegisterPage()
+                    case .forgotPassword:
+                        ForgotPasswordPage()
+                    case .dashboard:
+                        TabPage()
+                    case .recipeDetail(let recipe):
+                        RecipeDetailPage(recipe: recipe)
+                    case .favourites:
+                        FavouriteListPage()
                     }
                 }
         }
+        .environmentObject(navigator)
+        .addEnvironmentToastor(toastor)
     }
+
 }

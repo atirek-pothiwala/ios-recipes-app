@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TipModel: Identifiable, Codable {
+struct TipModel: Identifiable, Hashable, Codable {
     
     /*
          {

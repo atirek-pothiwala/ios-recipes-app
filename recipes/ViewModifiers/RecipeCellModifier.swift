@@ -12,7 +12,7 @@ struct RecipeCellModifier: ViewModifier {
         content
             .listRowBackground(
                 RoundedRectangle(cornerRadius: 15)
-                    .foregroundStyle(Color.accentColor.opacity(0.1))
+                    .foregroundStyle(Color.accent.opacity(0.1))
             )
             .listRowSeparator(.hidden)
             .listRowInsets(

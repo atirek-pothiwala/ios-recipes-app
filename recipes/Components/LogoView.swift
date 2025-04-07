@@ -9,10 +9,10 @@ import SwiftUI
 
 struct LogoView: View {
     
-    var aspectRatio: Double
+    var ratio: Double
     
-    init(aspectRatio: Double = 1.25) {
-        self.aspectRatio = aspectRatio
+    init(ratio: Double = 1.25) {
+        self.ratio = ratio
     }
     
     
@@ -21,16 +21,28 @@ struct LogoView: View {
             Rectangle()
                 .foregroundStyle(.clear)
                 .frame(maxWidth: .infinity)
-                .aspectRatio(aspectRatio, contentMode: .fit)
+                .aspectRatio(ratio, contentMode: .fit)
             
-            VStack(alignment: .center) {
-                Text("Recipes")
-                    .foregroundStyle(.white)
-                    .font(.system(size: 50, weight: .black))
+                HStack(alignment: .center, spacing: 15) {
+                    Image.init("logo")
+                        .resizable()
+                        .frame(width: 60, height: 60)
+                        .scaledToFit()
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .shadow(color: .white, radius: 5)
+            
+                    VStack(alignment: .center, spacing: 0) {
+                        Text("Recipes")
+                            .font(.system(size: 35, weight: .semibold))
+                            .foregroundStyle(Color.white)
+                            .shadow(color: .black, radius: 10)
+                        
+                        Text("By Knight Chef")
+                            .font(.system(size: 15, weight: .medium))
+                            .foregroundStyle(.white)
+                            .shadow(color: .black, radius: 10)
+                    }
                 
-                Text("By Knightislive")
-                    .foregroundStyle(.white)
-                    .font(.system(size: 20, weight: .semibold))
             }
             .modifier(BreathEffectModifier())
         }
@@ -40,5 +52,5 @@ struct LogoView: View {
 #Preview {
     LogoView()
         .padding(.all, 32)
-        .background(Color.accentColor)
+        .background(Color.accent)
 }

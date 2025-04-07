@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ForgotPasswordPage: View {
-    @Environment(\.dismiss) var dismiss
-
+    
+    @EnvironmentObject var navigator: Navigator
     @State private var email: String = ""
             
     var body: some View {
@@ -22,15 +22,15 @@ struct ForgotPasswordPage: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             tfEmail
-            btnLogin
+            btnSubmit
             
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.accentColor)
+        .background(Color.accent)
         .safeAreaPadding()
         .modifier(NavigationBarModifier("Forgot Password") {
-            dismiss()
+            navigator.pop()
         })
     }
     
@@ -49,8 +49,8 @@ struct ForgotPasswordPage: View {
         }
     }
     
-    var btnLogin: some View {
-        NavigationLink {
+    var btnSubmit: some View {
+        Button {
             
         } label: {
             Image(systemName: "chevron.right")
@@ -60,11 +60,5 @@ struct ForgotPasswordPage: View {
         .padding(.horizontal, 24)
         .padding(.vertical, 16)
         .background(.white, in: .circle)
-    }
-}
-
-#Preview {
-    NavigationStack {
-        ForgotPasswordPage()
     }
 }

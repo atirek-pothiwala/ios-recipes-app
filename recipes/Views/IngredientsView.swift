@@ -9,9 +9,9 @@ import SwiftUI
 
 struct IngredientsView: View {
     
-    let list: [String]
+    let list: [IngredientModel]
     
-    init(_ list: [String]) {
+    init(_ list: [IngredientModel]) {
         self.list = list
     }
     
@@ -24,15 +24,17 @@ struct IngredientsView: View {
                 .padding(.top, 5)
             
             VStack {
-                ForEach(0..<self.list.count, id: \.self) { index in
-                    Text(self.list[index])
+                ForEach(0..<list.count, id: \.self) { index in
+                    let item = list[index]
+                    let text = item.quantity > 0 ? "\(item.name) (\(item.quantity) \(item.unit))" : item.name
+                    Text(text)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.system(size: 15, weight: .regular))
                         .foregroundStyle(.black)
                         .padding(.horizontal, 20)
                         .padding(.vertical, 10)
                     
-                    if index < self.list.count - 1 {
+                    if index < list.count - 1 {
                         Rectangle()
                             .foregroundStyle(.gray.opacity(0.1))
                             .frame(maxWidth: .infinity, maxHeight: 1)
@@ -46,8 +48,4 @@ struct IngredientsView: View {
         .frame(maxWidth: .infinity)
         .padding(.all)
     }
-}
-
-#Preview {
-    IngredientsView(Constants.shared.ingredients)
 }

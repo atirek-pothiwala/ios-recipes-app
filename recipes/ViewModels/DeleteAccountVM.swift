@@ -8,37 +8,24 @@
 
 import Foundation
 
-class SettingsVM: ObservableObject {
+class DeleteAccountVM: ObservableObject {
     private let service = AccountService()
     
-    @Published var account: AccountModel?
-    @Published var loading: Bool = true
-    @Published var error: String = ""
+    @Published var password: String = ""
     @Published var swipe: SwipeActionView.SwipeAction = .none
-        
-    func fetch(loader: Bool = true) {
-        DispatchQueue.main.async {
-            if loader {
-                self.loading = true
-            }
-        }
-        service.profile { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let account):
-                    self?.account = account
-                case .failure(let error):
-                    self?.error = error.localizedDescription
-                }
-                if loader {
-                    self?.loading = false
-                }
-            }
-        }
-    }
     
+    @Published var loading: Bool = false
+    @Published var error: String = ""
+    
+    func validate() -> Bool {
+        return !password.isEmpty
+    }
+        
     func delete() {
-        service.delete(account!.password) { [weak self] result in
+        DispatchQueue.main.async {
+            self.loading = true
+        }
+        service.delete(password) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(_):
@@ -47,6 +34,7 @@ class SettingsVM: ObservableObject {
                     self?.error = error.localizedDescription
                     self?.swipe = .none
                 }
+                self?.loading = false
             }
         }
     }

@@ -7,41 +7,36 @@
 
 import SwiftUI
 
-struct DeleteAccountSheet: View {
+struct LogoutAccountSheet: View {
     
-    @EnvironmentObject private var toastor: Toastor
-    @StateObject private var viewModel = DeleteAccountVM()
-    @FocusState private var focusedInput: Field?
-    
-    let onDismiss: (_ isAccountDeleted: Bool) -> Void
+    let onDismiss: (_ isLoggedOut: Bool) -> Void
+    @State private var swipe: SwipeActionView.SwipeAction = .none
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
                     
-            Image(systemName: "trash.circle.fill")
+            Image(systemName: "power.circle.fill")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 75, height: 75)
-                .foregroundStyle(Color.red)
+                .foregroundStyle(Color.accent)
                 .padding(.bottom, 15)
             
-            Text("We're sad to see you go!")
+            Text("Logging out? See you soon!")
                 .font(.system(size: 24, weight: .semibold))
-                .foregroundStyle(Color.red)
+                .foregroundStyle(Color.accent)
             
-            Text("Deleting your account will erase all your data.")
+            Text("You will need to log in again to access your data.")
                 .font(.system(size: 16, weight: .regular))
-                .foregroundStyle(Color.red.opacity(0.5))
+                .foregroundStyle(Color.accent.opacity(0.5))
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 15)
-            
-            tfPassword
-            
+                        
             Spacer()
             
-            btnDelete
+            btnLogout
             
-            Text("Think it through — this action can't be undone.")
+            Text("We'll be here when you get back.")
                 .frame(maxWidth: .infinity, alignment: .center)
                 .font(.system(size: 14, weight: .regular))
                 .foregroundStyle(Color.gray)
@@ -51,55 +46,28 @@ struct DeleteAccountSheet: View {
         .safeAreaPadding(.all, 24)
         .presentationDetents([.medium, .large])
         .presentationDragIndicator(.visible)
-        .applyToast(toastor, viewModel.error, of: .error)
     }
-    
-    var tfPassword: some View {
-        PasswordTextField(text: $viewModel.password, tint: .red.opacity(0.5)) {
-            Text("Password")
-                .foregroundStyle(.red.opacity(0.5))
-        }
-        .modifier(
-            TextFieldModifier(
-                textColor: .black,
-                hintColor: .red,
-                background: .gray.opacity(0.15)
-            )
-        )
-        .focused($focusedInput, equals: .password)
-        .keyboardType(.default)
-        .textContentType(.password)
-        .textInputAutocapitalization(.none)
-        .submitLabel(.done)
-        .onSubmit {
-            focusedInput = .none
-        }
-    }
-    
-    var btnDelete: some View {
+        
+    var btnLogout: some View {
         SwipeActionView(
-            swipe: $viewModel.swipe,
-            defaultText: "Swipe to Delete Account",
+            swipe: $swipe,
+            thumbTint: Color.accentColor,
+            backgroundColor: Color.accent,
+            defaultText: "Swipe to Logout",
             progressText: "Processing",
-            completeText: "Account Deleted") { action in
+            completeText: "Logged Out") { action in
                 if action == .progress {
-                    viewModel.delete()
+                    swipe = .completed
                 } else if action == .completed {
                     onDismiss(true)
                 }
             }
-            .disabled(!viewModel.validate())
     }
 }
 
-private extension DeleteAccountSheet {
-    enum Field: Int, Hashable, CaseIterable {
-        case password
-    }
-}
 
 #Preview {
-    DeleteAccountSheet { isAccountDeleted in
+    LogoutAccountSheet { isLoggedOut in
         
     }
 }

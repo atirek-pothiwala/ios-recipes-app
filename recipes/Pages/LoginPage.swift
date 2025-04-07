@@ -8,49 +8,41 @@
 import SwiftUI
 
 struct LoginPage: View {
-        
-    @State private var path = NavigationPath()
+    
+    @EnvironmentObject var navigator: Navigator
+    @EnvironmentObject var toastor: Toastor
+    
     @StateObject private var viewModel = LoginVM()
     @FocusState private var focusedInput: Field?
 
     var body: some View {
-        NavigationStack(path: $path) {
-            ScrollView(.vertical) {
-                VStack(alignment: .trailing, spacing: 15) {
-                    LogoView()
-                    
-                    Text("Enter you email address and password for login. Explore food recipes 😋")
-                        .foregroundStyle(.white)
-                        .multilineTextAlignment(.leading)
-                        .font(.system(size: 18, weight: .regular))
-                        .frame(maxWidth: .infinity)
-                    
-                    tfEmail
-                    tfPassword
-                    
-                    HStack(alignment: .center) {
-                        btnRegister
-                        btnLogin
-                    }
-                    
-                    btnForgotPassword
+        ScrollView(.vertical) {
+            VStack(alignment: .trailing, spacing: 15) {
+                LogoView()
+                
+                Text("Enter you email address and password for login. Explore food recipes 😋")
+                    .foregroundStyle(.white)
+                    .multilineTextAlignment(.leading)
+                    .font(.system(size: 18, weight: .regular))
+                    .frame(maxWidth: .infinity)
+                
+                tfEmail
+                tfPassword
+                
+                HStack(alignment: .center) {
+                    btnRegister
+                    btnLogin
                 }
-            }
-            .frame(maxWidth: .infinity)
-            .background(Color.accentColor)
-            .navigationBarBackButtonHidden()
-            .applyKeyboardNavigation($focusedInput)
-            .safeAreaPadding()
-            .navigationDestination(for: Route.self) { route in
-                if route == .dashboard {
-                    TabPage()
-                } else if route == .register {
-                    RegisterPage()
-                } else if route == .forgotPassword {
-                    ForgotPasswordPage()
-                }
+                
+                btnForgotPassword
             }
         }
+        .frame(maxWidth: .infinity)
+        .background(Color.accent)
+        .navigationBarBackButtonHidden()
+        .applyKeyboardNavigation($focusedInput)
+        .applyToast(toastor, viewModel.error, of: .error)
+        .safeAreaPadding()
     }
     
     var tfEmail: some View {
@@ -87,7 +79,7 @@ struct LoginPage: View {
     
     var btnForgotPassword: some View {
         Button {
-            self.path.append(Route.forgotPassword)
+            navigator.push(Route.forgotPassword)
         } label: {
             Text("Forgot Password?")
         }
@@ -99,7 +91,7 @@ struct LoginPage: View {
     var btnLogin: some View {
         Button {
             viewModel.login {
-                self.path.append(Route.dashboard)
+                navigator.push(Route.dashboard)
             }
         } label: {
             Image(systemName: "chevron.right")
@@ -108,11 +100,12 @@ struct LoginPage: View {
         .font(.system(size: 18, weight: .bold))
         .padding(.all, 16)
         .background(.white, in: .circle)
+        .disabled(!viewModel.validate)
     }
     
     var btnRegister: some View {
         Button {
-            self.path.append(Route.register)
+            navigator.push(Route.register)
         } label: {
             Text("New Account")
         }
@@ -128,14 +121,6 @@ private extension LoginPage {
     enum Field: Int, Hashable, CaseIterable {
         case email
         case password
-    }
-}
-
-private extension LoginPage {
-    enum Route: Hashable {
-        case dashboard
-        case register
-        case forgotPassword
     }
 }
 

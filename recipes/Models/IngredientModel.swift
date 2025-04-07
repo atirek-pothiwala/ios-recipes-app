@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct IngredientModel: Identifiable, Codable {
+struct IngredientModel: Identifiable, Hashable, Codable {
     
     /*
          {

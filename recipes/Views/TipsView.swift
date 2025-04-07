@@ -9,9 +9,9 @@ import SwiftUI
 
 struct TipsView: View {
     
-    let list: [String]
+    let list: [TipModel]
     
-    init(_ list: [String]) {
+    init(_ list: [TipModel]) {
         self.list = list
     }
     
@@ -34,7 +34,7 @@ struct TipsView: View {
                         .font(.system(size: 15, weight: .semibold))
                         .foregroundStyle(.black)
                     
-                    Text(item)
+                    Text(item.description)
                         .font(.system(size: 15, weight: .regular))
                         .foregroundStyle(.black)
                         .padding(.top, 5)
@@ -49,8 +49,4 @@ struct TipsView: View {
         .padding(.all)
         
     }
-}
-
-#Preview {
-    TipsView(Constants.shared.tips)
 }

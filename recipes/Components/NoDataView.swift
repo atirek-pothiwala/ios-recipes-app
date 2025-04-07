@@ -7,60 +7,66 @@
 
 import SwiftUI
 
-struct ImageView: View {
-    let url: String
+typealias OnReload = () -> Void
+
+struct NoDataView: View {
+    
+    static let emojis: [String] = [
+        "🥘",
+        "🍲",
+        "🍔",
+        "🍟",
+        "🍕",
+        "🍳",
+        "🍛",
+        "🍜",
+        "🥚",
+        "🌯"
+    ]
+    static var randomEmoji: String {
+        return emojis.randomElement() ?? "🍽️"
+    }
+    
+    let text: String
+    let color: Color
+    let onReload: OnReload?
+    
+    init(text: String? = nil, color: Color = Color.accent, onReload: OnReload? = nil) {
+        self.text = text ?? "We will find some recipes\nfor you soon."
+        self.color = color
+        self.onReload = onReload
+    }
     
     var body: some View {
-        asyncImageView
-    }
-    
-    var asyncImageView: some View {
-        let imageUrl = URL(string: Constants.IMAGE_BASE_URL + url)
-        return AsyncImage(url: imageUrl) { phase in
-            switch phase {
-            case .empty:
-                ProgressView()
-            case .success(let image):
-                image
-                    .resizable()
-                    .scaledToFit()
-                    .aspectRatio(contentMode: .fill)
-            case .failure:
-                EmptyView()
-            @unknown default:
-                EmptyView()
-            }
-        }
-    }
-    
-    @State private var image: UIImage? = nil
-    
-    var sessionImageView: some View {
-        Group {
-            if let image = image {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .aspectRatio(contentMode: .fill)
-            } else {
-                ProgressView()
-                    .onAppear {
-                        loadImage()
+        VStack(alignment: .center, spacing: 10) {
+            Text(NoDataView.randomEmoji)
+                .font(.system(size: 75))
+            Text(text)
+                .font(.system(size: 20, weight: .medium))
+                .multilineTextAlignment(.center)
+                .foregroundStyle(color)
+            
+            if onReload != nil {
+                Button {
+                    onReload?()
+                } label: {
+                    VStack(alignment: .center, spacing: 10) {
+                        Image(systemName: "arrow.clockwise.icloud.fill")
+                            .font(.system(size: 40, weight: .regular))
+                        Text("Tap here to try again.")
+                            .font(.system(size: 16, weight: .regular))
                     }
-            }
-        }
-    }
-    
-    func loadImage() {
-        guard let imageUrl = URL(string: Constants.IMAGE_BASE_URL + url) else {
-            return
-        }
-        URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
-            if let data = data, let uiImage = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    self.image = uiImage
                 }
+                .foregroundStyle(Color.gray)
+                .offset(y: 50)
             }
-        }.resume()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+    }
+}
+
+#Preview {
+    NoDataView() {
+        
     }
 }

@@ -17,7 +17,7 @@ struct TabPage: View {
                     Label("Dicover", systemImage: "tornado")
                 }
             
-            ReciepsPage()
+            RecipeListPage()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .tabItem {
                     Label("Recipes", systemImage: "fork.knife")
@@ -36,7 +36,5 @@ struct TabPage: View {
 
 
 #Preview {
-    NavigationStack {
-        TabPage()
-    }
+    TabPage()
 }

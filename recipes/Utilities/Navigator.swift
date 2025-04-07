@@ -12,6 +12,7 @@ class Navigator: ObservableObject {
     @Published var path = NavigationPath()
 
     func reset() {
+        Constants.shared.token = ""
         path.removeLast(path.count)
     }
 

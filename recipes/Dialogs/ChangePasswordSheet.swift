@@ -7,63 +7,84 @@
 
 import SwiftUI
 
-struct DeleteAccountSheet: View {
+struct ChangePasswordSheet: View {
     
     @EnvironmentObject private var toastor: Toastor
-    @StateObject private var viewModel = DeleteAccountVM()
+    @StateObject private var viewModel = ChangePasswordVM()
     @FocusState private var focusedInput: Field?
     
-    let onDismiss: (_ isAccountDeleted: Bool) -> Void
+    let onDismiss: () -> Void
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-                    
-            Image(systemName: "trash.circle.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 75, height: 75)
-                .foregroundStyle(Color.red)
-                .padding(.bottom, 15)
-            
-            Text("We're sad to see you go!")
-                .font(.system(size: 24, weight: .semibold))
-                .foregroundStyle(Color.red)
-            
-            Text("Deleting your account will erase all your data.")
-                .font(.system(size: 16, weight: .regular))
-                .foregroundStyle(Color.red.opacity(0.5))
-                .multilineTextAlignment(.center)
-                .padding(.bottom, 15)
+        VStack(alignment: .trailing, spacing: 15) {
+                        
+            VStack(alignment: .leading, spacing: 0) {
+                
+                Image(systemName: "lock.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundStyle(Color.accent)
+                    .frame(width: 75, height: 75)
+                    .modifier(ShakeEffectModifier())
+                    .padding(.bottom, 15)
+                
+                Text("Change Password")
+                    .font(.system(size: 24, weight: .semibold))
+                    .foregroundStyle(Color.accent)
+                
+                Text("Set a new password for your account.")
+                    .font(.system(size: 16, weight: .regular))
+                    .foregroundStyle(Color.accent.opacity(0.5))
+                    .multilineTextAlignment(.center)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
             
             tfPassword
             
+            tfNewPassword
+            
             Spacer()
             
-            btnDelete
-            
-            Text("Think it through — this action can't be undone.")
-                .frame(maxWidth: .infinity, alignment: .center)
-                .font(.system(size: 14, weight: .regular))
-                .foregroundStyle(Color.gray)
-                .multilineTextAlignment(.center)
-                .padding(.top, 10)
+            btnSubmit
         }
-        .safeAreaPadding(.all, 30)
+        .safeAreaPadding(.all, 24)
         .presentationDetents([.medium, .large])
         .presentationDragIndicator(.visible)
         .applyToast(toastor, viewModel.error, of: .error)
     }
     
     var tfPassword: some View {
-        PasswordTextField(text: $viewModel.password, tint: .red) {
-            Text("Password")
-                .foregroundStyle(.red.opacity(0.5))
+        PasswordTextField(text: $viewModel.currentPassword, tint: .accent.opacity(0.5)) {
+            Text("Current Password")
+                .foregroundStyle(.accent.opacity(0.5))
         }
         .modifier(
             TextFieldModifier(
-                textColor: .black,
-                hintColor: .red,
-                background: .gray.opacity(0.15)
+                textColor: .accent,
+                hintColor: .accent,
+                background: .accent.opacity(0.15)
+            )
+        )
+        .focused($focusedInput, equals: .password)
+        .keyboardType(.default)
+        .textContentType(.password)
+        .textInputAutocapitalization(.none)
+        .submitLabel(.next)
+        .onSubmit {
+            focusedInput = .confirmPassword
+        }
+    }
+    
+    var tfNewPassword: some View {
+        PasswordTextField(text: $viewModel.newPassword, tint: .accent.opacity(0.5)) {
+            Text("New Password")
+                .foregroundStyle(.accent.opacity(0.5))
+        }
+        .modifier(
+            TextFieldModifier(
+                textColor: .accent,
+                hintColor: .accent,
+                background: .accent.opacity(0.15)
             )
         )
         .focused($focusedInput, equals: .password)
@@ -76,29 +97,31 @@ struct DeleteAccountSheet: View {
         }
     }
     
-    var btnDelete: some View {
-        SwipeActionView(
-            swipe: $viewModel.swipe,
-            defaultText: "Swipe to Delete Account",
-            progressText: "Processing",
-            completeText: "Account Deleted") { action in
-                if action == .progress {
-                    viewModel.delete()
-                } else if action == .completed {
-                    onDismiss(true)
-                }
+    var btnSubmit: some View {
+        Button {
+            viewModel.change {
+                onDismiss()
             }
+        } label: {
+            Image(systemName: "chevron.right")
+        }
+        .foregroundStyle(Color.white)
+        .font(.system(size: 18, weight: .bold))
+        .padding(.all, 16)
+        .background(.accent, in: .circle)
+        .disabled(!viewModel.validate())
     }
 }
 
-private extension DeleteAccountSheet {
+private extension ChangePasswordSheet {
     enum Field: Int, Hashable, CaseIterable {
         case password
+        case confirmPassword
     }
 }
 
 #Preview {
-    DeleteAccountSheet { isAccountDeleted in
+    ChangePasswordSheet {
         
     }
 }

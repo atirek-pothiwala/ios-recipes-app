@@ -1,5 +1,5 @@
 //
-//  RecipeListVM.swift
+//  SettingsVM.swift
 //  recipes
 //
 //  Created by Atirek Pothiwala on 31/03/25.
@@ -8,26 +8,26 @@
 
 import Foundation
 
-class RecipeDetailVM: ObservableObject {
-    private let service = RecipeService()
+class SettingsVM: ObservableObject {
+    private let service = AccountService()
     
-    @Published var recipe: RecipeDetailModel?
+    @Published var account: AccountModel?
     @Published var loading: Bool = true
     @Published var error: String = ""
+    @Published var swipe: SwipeActionView.SwipeAction = .none
         
-    func fetch(_ id: Int, loader: Bool = true) {
+    func fetch(loader: Bool = true) {
         DispatchQueue.main.async {
             if loader {
                 self.loading = true
             }
         }
-        service.detail(id) { [weak self] result in
+        service.profile { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
-                case .success(let recipe):
-                    self?.recipe = recipe
+                case .success(let account):
+                    self?.account = account
                 case .failure(let error):
-                    debugPrint("Error: \(error.localizedDescription)")
                     self?.error = error.localizedDescription
                 }
                 if loader {
@@ -36,4 +36,5 @@ class RecipeDetailVM: ObservableObject {
             }
         }
     }
+
 }

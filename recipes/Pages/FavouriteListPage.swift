@@ -7,22 +7,19 @@
 
 import SwiftUI
 
-struct RecipeListPage: View {
+struct FavouriteListPage: View {
     
     @EnvironmentObject var toastor: Toastor
     @EnvironmentObject var navigator: Navigator
     
-    @StateObject private var viewModel = RecipeListVM()
+    @StateObject private var viewModel = FavouriteListVM()
     @State var imageSize: CGSize = .zero
         
     var body: some View {
         VStack(alignment: .leading) {
-            ToolbarView {
-                print("Open Filter")
-            }
             if viewModel.loading {
-                ProgressView("Loading Recipes")
-                    .tint(Color.accentColor)
+                ProgressView("Loading Favourites")
+                    .tint(Color.accent)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .onAppear {
                         viewModel.fetch()
@@ -38,7 +35,6 @@ struct RecipeListPage: View {
                 .scrollContentBackground(.hidden)
                 .scrollIndicators(.never)
                 .listStyle(.plain)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .refreshable {
                     Task {
                         viewModel.fetch(loader: false)
@@ -54,6 +50,11 @@ struct RecipeListPage: View {
                 }
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.white)
+        .modifier(NavigationBarModifier("My Favourites") {
+            navigator.pop()
+        })
         .applyToast(toastor, viewModel.error, of: .error)
         .safeAreaPadding()
     }

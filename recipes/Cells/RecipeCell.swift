@@ -21,13 +21,12 @@ struct RecipeCell: View {
         HStack(alignment: .top, spacing: 15) {
             ImageView(url: item.photo)
                 .resize(imageSize)
-                .background(Color.accentColor.opacity(0.5))
-                .cornerRadius(15, antialiased: true)
                 .scaledToFill()
+                .cornerRadius(15, antialiased: true)
             
             VStack(alignment: .leading, spacing: 7.5) {
                 Text(item.name)
-                    .foregroundStyle(Color.accentColor)
+                    .foregroundStyle(Color.accent)
                     .font(.system(size: 24, weight: .semibold))
                 
                 Rectangle()
@@ -39,21 +38,21 @@ struct RecipeCell: View {
                 PrepTimeView(
                     item.preparationTimeFormatted,
                     direction: .leading,
-                    textColor: .accentColor,
+                    textColor: .accent,
                     shadowColor: .clear
                 )
                 
                 CookTimeView(
                     item.cookingTimeFormatted,
                     direction: .leading,
-                    textColor: .accentColor,
+                    textColor: .accent,
                     shadowColor: .clear
                 )
                 
                 ServesView(
                     "\(item.servings)",
                     direction: .leading,
-                    textColor: .accentColor,
+                    textColor: .accent,
                     shadowColor: .clear
                 )
             }

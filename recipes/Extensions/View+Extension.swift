@@ -19,13 +19,17 @@ extension View {
         }
     }
     
-    func renderSize(ratio: CGSize, _ onSize: @escaping (CGSize) -> Void) -> some View {
+    func renderSize(ratio: CGSize? = nil, _ onSize: @escaping (CGSize) -> Void) -> some View {
         return self.onGeometryChange(for: CGRect.self) { proxy in
             proxy.frame(in: .global)
         } action: { newValue in
+            guard ratio != nil else {
+                onSize(newValue.size)
+                return
+            }
             let size = CGSize(
-                width: newValue.width * ratio.width,
-                height: newValue.width * ratio.height
+                width: newValue.width * ratio!.width,
+                height: newValue.width * ratio!.height
             )
             onSize(size)
         }

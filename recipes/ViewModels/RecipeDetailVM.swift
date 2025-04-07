@@ -8,28 +8,29 @@
 
 import Foundation
 
-class RecipeListVM: ObservableObject {
+class RecipeDetailVM: ObservableObject {
     private let service = RecipeService()
     
-    @Published var list: [RecipeModel] = []
-    @Published var loading: Bool = false
+    @Published var recipe: RecipeDetailModel?
+    @Published var loading: Bool = true
     @Published var error: String = ""
         
-    func fetch(loader: Bool = true) {
-        if loader {
-            self.loading = true
+    func fetch(_ id: Int, loader: Bool = true) {
+        DispatchQueue.main.async {
+            if loader {
+                self.loading = true
+            }
         }
-        service.list { [weak self] result in
+        service.detail(id) { [weak self] result in
             DispatchQueue.main.async {
+                switch result {
+                case .success(let recipe):
+                    self?.recipe = recipe
+                case .failure(let error):
+                    self?.error = error.localizedDescription
+                }
                 if loader {
                     self?.loading = false
-                }
-                switch result {
-                case .success(let list):
-                    self?.list = list
-                case .failure(let error):
-                    print("Error: \(error.localizedDescription)")
-                    self?.error = error.localizedDescription
                 }
             }
         }

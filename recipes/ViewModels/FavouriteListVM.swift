@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RecipeListVM: ObservableObject {
+class FavouriteListVM: ObservableObject {
     private let service = RecipeService()
     
     @Published var list: [RecipeModel] = []
