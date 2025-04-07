@@ -15,22 +15,7 @@ struct LogoutAccountSheet: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
                     
-            Image(systemName: "power.circle.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 75, height: 75)
-                .foregroundStyle(Color.accent)
-                .padding(.bottom, 15)
-            
-            Text("Logging out? See you soon!")
-                .font(.system(size: 24, weight: .semibold))
-                .foregroundStyle(Color.accent)
-            
-            Text("You will need to log in again to access your data.")
-                .font(.system(size: 16, weight: .regular))
-                .foregroundStyle(Color.accent.opacity(0.5))
-                .multilineTextAlignment(.center)
-                .padding(.bottom, 15)
+            titleView
                         
             Spacer()
             
@@ -46,6 +31,28 @@ struct LogoutAccountSheet: View {
         .safeAreaPadding(.all, 24)
         .presentationDetents([.medium, .large])
         .presentationDragIndicator(.visible)
+    }
+    
+    var titleView: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Image(systemName: "power.circle.fill")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 75, height: 75)
+                .foregroundStyle(Color.accent)
+                .padding(.bottom, 15)
+            
+            Text("Logging out? See you soon!")
+                .font(.system(size: 24, weight: .semibold))
+                .foregroundStyle(Color.accent)
+                .padding(.bottom, 5)
+            
+            Text("You will need to log in again to access your data.")
+                .font(.system(size: 16, weight: .regular))
+                .foregroundStyle(Color.accent.opacity(0.5))
+                .multilineTextAlignment(.center)
+                .padding(.bottom, 15)
+        }
     }
         
     var btnLogout: some View {

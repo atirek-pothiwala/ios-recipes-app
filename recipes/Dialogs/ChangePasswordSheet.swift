@@ -18,26 +18,7 @@ struct ChangePasswordSheet: View {
     var body: some View {
         VStack(alignment: .trailing, spacing: 15) {
                         
-            VStack(alignment: .leading, spacing: 0) {
-                
-                Image(systemName: "lock.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .foregroundStyle(Color.accent)
-                    .frame(width: 75, height: 75)
-                    .modifier(ShakeEffectModifier())
-                    .padding(.bottom, 15)
-                
-                Text("Change Password")
-                    .font(.system(size: 24, weight: .semibold))
-                    .foregroundStyle(Color.accent)
-                
-                Text("Set a new password for your account.")
-                    .font(.system(size: 16, weight: .regular))
-                    .foregroundStyle(Color.accent.opacity(0.5))
-                    .multilineTextAlignment(.center)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            titleView
             
             tfPassword
             
@@ -51,6 +32,31 @@ struct ChangePasswordSheet: View {
         .presentationDetents([.medium, .large])
         .presentationDragIndicator(.visible)
         .applyToast(toastor, viewModel.error, of: .error)
+    }
+    
+    var titleView: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            
+            Image(systemName: "lock.fill")
+                .resizable()
+                .scaledToFit()
+                .foregroundStyle(Color.accent)
+                .frame(width: 75, height: 75)
+                .modifier(ShakeEffectModifier())
+                .padding(.bottom, 15)
+            
+            Text("Change Password")
+                .font(.system(size: 24, weight: .semibold))
+                .foregroundStyle(Color.accent)
+                .padding(.bottom, 5)
+            
+            Text("Set a new password for your account.")
+                .font(.system(size: 16, weight: .regular))
+                .foregroundStyle(Color.accent.opacity(0.5))
+                .multilineTextAlignment(.center)
+                .padding(.bottom, 15)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     var tfPassword: some View {

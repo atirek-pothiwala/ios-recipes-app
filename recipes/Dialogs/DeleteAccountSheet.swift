@@ -18,22 +18,7 @@ struct DeleteAccountSheet: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
                     
-            Image(systemName: "trash.circle.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 75, height: 75)
-                .foregroundStyle(Color.red)
-                .padding(.bottom, 15)
-            
-            Text("We're sad to see you go!")
-                .font(.system(size: 24, weight: .semibold))
-                .foregroundStyle(Color.red)
-            
-            Text("Deleting your account will erase all your data.")
-                .font(.system(size: 16, weight: .regular))
-                .foregroundStyle(Color.red.opacity(0.5))
-                .multilineTextAlignment(.center)
-                .padding(.bottom, 15)
+            titleView
             
             tfPassword
             
@@ -54,16 +39,38 @@ struct DeleteAccountSheet: View {
         .applyToast(toastor, viewModel.error, of: .error)
     }
     
+    var titleView: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Image(systemName: "trash.circle.fill")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 75, height: 75)
+                .foregroundStyle(Color.accent)
+                .padding(.bottom, 15)
+            
+            Text("We're sad to see you go!")
+                .font(.system(size: 24, weight: .semibold))
+                .foregroundStyle(Color.accent)
+                .padding(.bottom, 5)
+            
+            Text("Deleting your account will erase all your data.")
+                .font(.system(size: 16, weight: .regular))
+                .foregroundStyle(Color.accent.opacity(0.5))
+                .multilineTextAlignment(.center)
+                .padding(.bottom, 15)
+        }
+    }
+    
     var tfPassword: some View {
-        PasswordTextField(text: $viewModel.password, tint: .red.opacity(0.5)) {
+        PasswordTextField(text: $viewModel.password, tint: .accent.opacity(0.5)) {
             Text("Password")
-                .foregroundStyle(.red.opacity(0.5))
+                .foregroundStyle(.accent.opacity(0.5))
         }
         .modifier(
             TextFieldModifier(
-                textColor: .black,
-                hintColor: .red,
-                background: .gray.opacity(0.15)
+                textColor: .accent,
+                hintColor: .accent,
+                background: .accent.opacity(0.15)
             )
         )
         .focused($focusedInput, equals: .password)

@@ -32,6 +32,8 @@ struct DiscoverPage: View {
                                 viewModel.ignoreRecipe(at: index)
                             } else {
                                 viewModel.favouriteRecipe(at: index)
+                                let message = "\(item.name) - By \(item.chef) marked as favourite."
+                                toastor.show(message, .success)
                             }
                         }
                         .onTapGesture {
