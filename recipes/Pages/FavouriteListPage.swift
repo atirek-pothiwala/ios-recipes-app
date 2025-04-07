@@ -1,5 +1,5 @@
 //
-//  ReciepsPage.swift
+//  RecipeListPage.swift
 //  recipes
 //
 //  Created by Atirek Pothiwala on 28/03/25.
@@ -7,9 +7,12 @@
 
 import SwiftUI
 
-struct ReciepsPage: View {
+struct RecipeListPage: View {
     
-    @StateObject private var viewModel = RecipesVM()
+    @EnvironmentObject var toastor: Toastor
+    @EnvironmentObject var navigator: Navigator
+    
+    @StateObject private var viewModel = RecipeListVM()
     @State var imageSize: CGSize = .zero
         
     var body: some View {
@@ -19,10 +22,17 @@ struct ReciepsPage: View {
             }
             if viewModel.loading {
                 ProgressView("Loading Recipes")
+                    .tint(Color.accentColor)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else {
+                    .onAppear {
+                        viewModel.fetch()
+                    }
+            } else if !viewModel.list.isEmpty {
                 List($viewModel.list, id: \.id) { $item in
                     RecipeCell(item, imageSize)
+                        .onTapGesture {
+                            navigator.push(Route.recipeDetail(item))
+                        }
                 }
                 .listRowSpacing(15)
                 .scrollContentBackground(.hidden)
@@ -38,15 +48,17 @@ struct ReciepsPage: View {
                     size in
                     imageSize = size
                 }
+            } else {
+                NoDataView {
+                    viewModel.fetch()
+                }
             }
         }
+        .applyToast(toastor, viewModel.error, of: .error)
         .safeAreaPadding()
-        .onAppear {
-            viewModel.fetch()
-        }
     }
 }
 
 #Preview {
-    ReciepsPage()
+    RecipeListPage()
 }

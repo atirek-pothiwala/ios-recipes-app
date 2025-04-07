@@ -1,5 +1,5 @@
 //
-//  RecipesVM.swift
+//  RecipeListVM.swift
 //  recipes
 //
 //  Created by Atirek Pothiwala on 31/03/25.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RecipesVM: ObservableObject {
+class RecipeListVM: ObservableObject {
     private let service = RecipeService()
     
     @Published var list: [RecipeModel] = []

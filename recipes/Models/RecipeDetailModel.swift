@@ -1,5 +1,5 @@
 //
-//  RecipeDetailModel.swift
+//  Account.swift
 //  recipes
 //
 //  Created by Atirek Pothiwala on 31/03/25.
