@@ -25,6 +25,7 @@ class Constants {
     static let UPLOAD_URL: String = "/accounts/upload"
     static let DELETE_ACCOUNT_URL: String = "/accounts/delete"
     static let LIST_RECIPE_URL: String = "/recipes/list"
+    static let FILTER_LIST_RECIPE_URL: String = "/recipes/filterList"
     static let DETAIL_RECIPE_URL: String = "/recipes/detail"
 
     

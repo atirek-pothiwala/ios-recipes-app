@@ -20,6 +20,7 @@ class RecipeDetailVM: ObservableObject {
             if loader {
                 self.loading = true
             }
+            self.error = ""
         }
         service.detail(id) { [weak self] result in
             DispatchQueue.main.async {

@@ -25,6 +25,7 @@ class LoginVM: ObservableObject {
     func login(_ completion: @escaping () -> Void) {
         DispatchQueue.main.async {
             self.loading = true
+            self.error = ""
         }
         let fields = LoginFields(email, password)
         service.login(fields) { [weak self] result in

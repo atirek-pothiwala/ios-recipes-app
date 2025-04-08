@@ -16,12 +16,18 @@ class FavouriteListVM: ObservableObject {
     @Published var error: String = ""
         
     func fetch(loader: Bool = true) {
+        let favourites = Constants.shared.favourites
+        if favourites.isEmpty {
+            return
+        }
         DispatchQueue.main.async {
             if loader {
                 self.loading = true
             }
+            self.error = ""
         }
-        service.list { [weak self] result in
+        
+        service.filterList(favourites) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let list):
@@ -33,6 +39,16 @@ class FavouriteListVM: ObservableObject {
                     self?.loading = false
                 }
             }
+        }
+    }
+    
+    func remove(atOffsets indexSet: IndexSet) {
+        if let index = indexSet.first {
+            let deletedItem = list[index]
+            Constants.shared.favourites.removeAll { id in
+                return deletedItem.id == id
+            }
+            self.list.remove(at: index)
         }
     }
 }

@@ -26,6 +26,7 @@ class ChangePasswordVM: ObservableObject {
     func change(_ completion: @escaping () -> Void) {
         DispatchQueue.main.async {
             self.loading = true
+            self.error = ""
         }
         let fields = ChangePasswordFields(currentPassword, newPassword)
         service.changePassword(fields) { [weak self] result in
@@ -34,7 +35,6 @@ class ChangePasswordVM: ObservableObject {
                 case .success(_):
                     completion()
                 case .failure(let error):
-                    debugPrint(error.localizedDescription)
                     self?.error = error.localizedDescription
                 }
                 self?.loading = false

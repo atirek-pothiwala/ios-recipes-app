@@ -25,11 +25,16 @@ struct FavouriteListPage: View {
                         viewModel.fetch()
                     }
             } else if !viewModel.list.isEmpty {
-                List($viewModel.list, id: \.id) { $item in
-                    RecipeCell(item, imageSize)
-                        .onTapGesture {
-                            navigator.push(Route.recipeDetail(item))
-                        }
+                List {
+                    ForEach($viewModel.list, id: \.id) { $item in
+                        RecipeCell(item, imageSize)
+                            .onTapGesture {
+                                navigator.push(Route.recipeDetail(item))
+                            }
+                    }
+                    .onDelete { indexSet in
+                        viewModel.remove(atOffsets: indexSet)
+                    }
                 }
                 .listRowSpacing(15)
                 .scrollContentBackground(.hidden)
@@ -40,6 +45,7 @@ struct FavouriteListPage: View {
                         viewModel.fetch(loader: false)
                     }
                 }
+                .ignoresSafeArea(.container, edges: .horizontal)
                 .renderSize(ratio: CGSize(width: 0.25, height: 0.4)) {
                     size in
                     imageSize = size

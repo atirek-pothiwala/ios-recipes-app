@@ -39,6 +39,7 @@ struct RecipeListPage: View {
                 .scrollIndicators(.never)
                 .listStyle(.plain)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .ignoresSafeArea(.container, edges: .horizontal)
                 .refreshable {
                     Task {
                         viewModel.fetch(loader: false)

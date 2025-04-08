@@ -33,6 +33,7 @@ class RegisterVM: ObservableObject {
     func register(_ completion: @escaping () -> Void) {
         DispatchQueue.main.async {
             self.loading = true
+            self.error = ""
         }
         let fields = RegisterFields(firstName, lastName, email, password)
         service.register(fields) { [weak self] result in

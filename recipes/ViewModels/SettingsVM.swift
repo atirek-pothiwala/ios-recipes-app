@@ -21,6 +21,7 @@ class SettingsVM: ObservableObject {
             if loader {
                 self.loading = true
             }
+            self.error = ""
         }
         service.profile { [weak self] result in
             DispatchQueue.main.async {

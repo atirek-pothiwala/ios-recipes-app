@@ -30,7 +30,7 @@ struct DiscoverPage: View {
                         RecipeCardView(recipe: item) { direction in
                             if direction == .left {
                                 viewModel.ignoreRecipe(at: index)
-                            } else {
+                            } else if direction == .right {
                                 viewModel.favouriteRecipe(at: index)
                                 let message = "\(item.name) - By \(item.chef) marked as favourite."
                                 toastor.show(message, .success)

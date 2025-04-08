@@ -9,20 +9,21 @@ import SwiftUI
 
 typealias OnSwipe = (_ direction: SwipeDirection) -> Void
 
-enum SwipeDirection: String {
-    case left = "left"
-    case right = "right"
+enum SwipeDirection: Hashable {
+    case left
+    case right
+    case normal
 }
 
 struct SwipeModifier: ViewModifier {
     
     let threshold: CGFloat
+    @Binding var direction: SwipeDirection
     let onSwipe: OnSwipe
-    @Binding var color: Color
     
-    init(threshold: CGFloat = 200, color: Binding<Color>, _ onSwipe: @escaping OnSwipe) {
+    init(threshold: CGFloat = 200, direction: Binding<SwipeDirection>, _ onSwipe: @escaping OnSwipe) {
         self.threshold = threshold
-        _color = color
+        _direction = direction
         self.onSwipe = onSwipe
     }
     
@@ -43,7 +44,7 @@ struct SwipeModifier: ViewModifier {
                     })
                     .onChanged({ value in
                         withAnimation(.spring) {
-                            changeColor(value.translation.width)
+                            changeDirection(value.translation.width)
                         }
                     })
                     .onEnded { value in
@@ -64,16 +65,18 @@ struct SwipeModifier: ViewModifier {
             onSwipe(.right)
         } else {
             positionOffset = 0
+            onSwipe(.normal)
+            direction = .normal
         }
     }
     
-    func changeColor(_ value: CGFloat) {
-        if value < -threshold {
-            color = .red.opacity(0.5)
-        } else if value > threshold {
-            color = .green.opacity(0.5)
+    func changeDirection(_ value: CGFloat) {
+        if value < -threshold / 3 {
+            direction = .left
+        } else if value > threshold / 3 {
+            direction = .right
         } else {
-            color = .clear
+            direction = .normal
         }
     }
 }

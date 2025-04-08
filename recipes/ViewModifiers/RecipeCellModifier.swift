@@ -11,7 +11,7 @@ struct RecipeCellModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .listRowBackground(
-                RoundedRectangle(cornerRadius: 15)
+                Rectangle()
                     .foregroundStyle(Color.accent.opacity(0.1))
             )
             .listRowSeparator(.hidden)

@@ -19,9 +19,10 @@ struct RecipeCell: View {
     
     var body: some View {
         HStack(alignment: .top, spacing: 15) {
+            
             ImageView(url: item.photo)
-                .resize(imageSize)
                 .scaledToFill()
+                .resize(imageSize)
                 .cornerRadius(15, antialiased: true)
             
             VStack(alignment: .leading, spacing: 7.5) {
@@ -62,5 +63,6 @@ struct RecipeCell: View {
             )
         }
         .modifier(RecipeCellModifier())
+    
     }
 }

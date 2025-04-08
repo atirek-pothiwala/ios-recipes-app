@@ -24,6 +24,7 @@ class DeleteAccountVM: ObservableObject {
     func delete() {
         DispatchQueue.main.async {
             self.loading = true
+            self.error = ""
         }
         service.delete(password) { [weak self] result in
             DispatchQueue.main.async {

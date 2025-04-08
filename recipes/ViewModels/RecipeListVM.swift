@@ -20,6 +20,7 @@ class RecipeListVM: ObservableObject {
             if loader {
                 self.loading = true
             }
+            self.error = ""
         }
         service.list { [weak self] result in
             DispatchQueue.main.async {
