@@ -29,17 +29,7 @@ struct TipsView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             
             ForEach(list, id: \.self) { item in
-                HStack(alignment: .firstTextBaseline, spacing: 10) {
-                    Image(systemName: "checkmark.circle")
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(.black)
-                    
-                    Text(item.description)
-                        .font(.system(size: 15, weight: .regular))
-                        .foregroundStyle(.black)
-                        .padding(.top, 5)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                TipCell(item: item)
             }
         }
         .padding(.all, 20)

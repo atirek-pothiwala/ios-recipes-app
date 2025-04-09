@@ -12,8 +12,17 @@ class RecipeListVM: ObservableObject {
     private let service = RecipeService()
     
     @Published var list: [RecipeModel] = []
+    @Published var search: String = ""
     @Published var loading: Bool = true
     @Published var error: String = ""
+    
+    var filteredList: [RecipeModel] {
+        if search.isEmpty {
+            return list
+        } else {
+            return list.filter { $0.name.lowercased().contains(search.lowercased()) }
+        }
+    }
         
     func fetch(loader: Bool = true) {
         DispatchQueue.main.async {

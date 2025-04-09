@@ -52,7 +52,7 @@ struct RegisterPage: View {
             Text("First Name")
                 .foregroundStyle(.white.opacity(0.25))
         }
-        .modifier(TextFieldModifier())
+        .modifier(TextFieldModifier.normal)
         .focused($focusedInput, equals: .firstName)
         .keyboardType(.alphabet)
         .textContentType(.familyName)
@@ -68,7 +68,7 @@ struct RegisterPage: View {
             Text("Last Name")
                 .foregroundStyle(.white.opacity(0.25))
         }
-        .modifier(TextFieldModifier())
+        .modifier(TextFieldModifier.normal)
         .focused($focusedInput, equals: .lastName)
         .keyboardType(.alphabet)
         .textContentType(.familyName)
@@ -84,7 +84,7 @@ struct RegisterPage: View {
             Text("Email Address")
                 .foregroundStyle(.white.opacity(0.25))
         }
-        .modifier(TextFieldModifier())
+        .modifier(TextFieldModifier.normal)
         .focused($focusedInput, equals: .email)
         .keyboardType(.emailAddress)
         .textContentType(.emailAddress)
@@ -100,7 +100,7 @@ struct RegisterPage: View {
             Text("Password")
                 .foregroundStyle(.white.opacity(0.25))
         }
-        .modifier(TextFieldModifier())
+        .modifier(TextFieldModifier.normal)
         .focused($focusedInput, equals: .password)
         .keyboardType(.default)
         .textContentType(.password)
@@ -116,7 +116,7 @@ struct RegisterPage: View {
             Text("Confirm Password")
                 .foregroundStyle(.white.opacity(0.25))
         }
-        .modifier(TextFieldModifier())
+        .modifier(TextFieldModifier.normal)
         .focused($focusedInput, equals: .confirmPassword)
         .keyboardType(.default)
         .textContentType(.password)
@@ -135,7 +135,7 @@ struct RegisterPage: View {
         } label: {
             Image(systemName: "chevron.right")
         }
-        .foregroundStyle(Color.black)
+        .foregroundStyle(Color.accent)
         .font(.system(size: 18, weight: .bold))
         .padding(.horizontal, 24)
         .padding(.vertical, 16)

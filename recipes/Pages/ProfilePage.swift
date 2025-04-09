@@ -1,5 +1,5 @@
 //
-//  RecipeDetailPage.swift
+//  ProfilePage.swift
 //  recipes
 //
 //  Created by Atirek Pothiwala on 04/04/25.
@@ -11,31 +11,81 @@ struct ProfilePage: View {
     
     @EnvironmentObject var toastor: Toastor
     @EnvironmentObject var navigator: Navigator
-    
     @State private var showImagePicker = false
     
+    @StateObject private var viewModel = ProfileVM()
+    let account: AccountModel
+    
     var body: some View {
-        ZStack(alignment: .center) {
-            ProgressView("Loading Profile")
-                .tint(.white)
-                .onAppear {
-                    
-                }
+        VStack(alignment: .center) {
+            profileView
+            Spacer()
+            btnPicker
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.white)
+        .background(Color.accent)
         .modifier(NavigationBarModifier("Profile Photo") {
             navigator.pop()
         })
-        .applyToast(toastor, "", of: .error)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                btnSubmit
+            }
+        }
+        .applyToast(toastor, viewModel.error, of: .error)
         .safeAreaPadding(.bottom)
         .background {
             ImagePicker(selectedImage: $viewModel.pickedImage, isPresented: $showImagePicker)
         }
     }
+
+    var profileView: some View {
+        ZStack(alignment: .center) {
+            if viewModel.loading {
+                ProgressView("Loading Profile")
+                    .tint(.white)
+            } else {
+                if let pickedImage = viewModel.pickedImage {
+                    Image(uiImage: pickedImage)
+                        .resizable()
+                        .scaledToFill()
+                } else if let photo = account.photo {
+                    ImageView(url: photo)
+                        .scaledToFill()
+                } else {
+                    Image("phAccount")
+                        .resizable()
+                        .scaledToFill()
+                }
+            }
+        }
+        .aspectRatio(1, contentMode: .fit)
+        .ignoresSafeArea(.container, edges: .horizontal)
+    }
     
+    var btnPicker: some View {
+        Button {
+            showImagePicker = true
+        } label: {
+            Text("Pick Photo")
+                .foregroundStyle(.white)
+                .font(.system(size: 18, weight: .bold))
+        }
+        .padding(.horizontal, 24)
+        .padding(.vertical, 16)
+        .background(.black, in: .capsule)
+    }
+    
+    var btnSubmit: some View {
+        Button {
+            viewModel.upload {
+                navigator.pop()
+            }
+        } label: {
+            Text("Submit")
+                .font(.system(size: 16, weight: .regular))
+                .foregroundStyle(Color.white)
+        }
+    }
 }
 
-#Preview {
-    ProfilePage()
-}

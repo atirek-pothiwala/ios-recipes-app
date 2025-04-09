@@ -8,11 +8,21 @@
 import SwiftUI
 
 struct InstructionCell: View {
+    let item: InstructionModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading, spacing: 0) {
+            Text("Step \(item.stepNumber)")
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundStyle(.black)
+            
+            Text(item.description)
+                .font(.system(size: 15, weight: .regular))
+                .foregroundStyle(.black)
+                .padding(.top, 5)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 20)
+        .padding(.vertical, 10)
     }
-}
-
-#Preview {
-    InstructionCell()
 }

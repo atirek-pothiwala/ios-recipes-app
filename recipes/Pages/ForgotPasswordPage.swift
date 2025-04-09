@@ -39,7 +39,7 @@ struct ForgotPasswordPage: View {
             Text("Email Address")
                 .foregroundStyle(.white.opacity(0.25))
         }
-        .modifier(TextFieldModifier())
+        .modifier(TextFieldModifier.normal)
         .keyboardType(.emailAddress)
         .textContentType(.emailAddress)
         .textInputAutocapitalization(.never)
@@ -55,7 +55,7 @@ struct ForgotPasswordPage: View {
         } label: {
             Image(systemName: "chevron.right")
         }
-        .foregroundStyle(Color.black)
+        .foregroundStyle(Color.accent)
         .font(.system(size: 18, weight: .bold))
         .padding(.horizontal, 24)
         .padding(.vertical, 16)

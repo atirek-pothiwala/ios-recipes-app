@@ -29,11 +29,21 @@ struct RecipeDetailPage: View {
                     VStack(alignment: .leading, spacing: 0) {
                         PhotoView
                         DescriptionView
-                        IngredientsView(viewModel.recipe!.ingredients)
-                        InstructionsView(viewModel.recipe!.instructions)
-                        VariationsView(Constants.shared.variations)
-                        TipsView(viewModel.recipe!.tips)
-                        NutritionsView(Constants.shared.nutritionFacts)
+                        if let ingredients = viewModel.recipe?.ingredients, !ingredients.isEmpty {
+                            IngredientsView(ingredients)
+                        }
+                        if let instructions = viewModel.recipe?.instructions, !instructions.isEmpty {
+                            InstructionsView(instructions)
+                        }
+                        if let variations = viewModel.recipe?.variations, !variations.isEmpty {
+                            VariationsView(variations)
+                        }
+                        if let tips = viewModel.recipe?.tips, !tips.isEmpty {
+                            TipsView(tips)
+                        }
+                        if let nutritions = viewModel.recipe?.nutritions.first {
+                            NutritionsView(nutritions)
+                        }
                     }
                 }
                 .scrollIndicators(.never)

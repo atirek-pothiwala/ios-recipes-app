@@ -14,21 +14,18 @@ struct SettingsPage: View {
     @State private var colorEffectProgress: CGFloat = 0
     
     @StateObject private var viewModel = SettingsVM()
-    @State private var showDeleteSheet = false
+
     @State private var showChangePasswordSheet = false
     @State private var showLogoutSheet = false
+    @State private var showDeleteSheet = false
 
     var body: some View {
         VStack(alignment: .leading) {
-            
             ToolbarView()
             ZStack {
                 if viewModel.loading {
                     ProgressView("Loading Account")
                         .tint(Color.accent)
-                        .onAppear {
-                            viewModel.fetch()
-                        }
                 } else {
                     ScrollView {
                         VStack(alignment: .leading) {
@@ -69,6 +66,9 @@ struct SettingsPage: View {
                 navigator.reset()
             }
             .addEnvironmentToastor(toastor)
+        }
+        .onAppear {
+            viewModel.fetch()
         }
     }
     
@@ -132,7 +132,9 @@ struct SettingsPage: View {
     
     var btnImagePicker: some View {
         Button {
-            
+            if let account = viewModel.account {
+                navigator.push(Route.profilePage(account))
+            }
         } label: {
             Image(systemName: "square.and.pencil.circle.fill")
                 .font(.system(size: 40, weight: .bold))

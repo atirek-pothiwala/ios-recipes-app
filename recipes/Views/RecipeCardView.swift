@@ -85,6 +85,7 @@ struct RecipeCardView: View {
             
             Text("😍")
                 .font(.system(size: 75))
+                .modifier(BreathEffectModifier())
                 .padding(.all, 25)
         }
     }
@@ -105,6 +106,7 @@ struct RecipeCardView: View {
             
             Text("😑")
                 .font(.system(size: 75))
+                .modifier(BreathEffectModifier())
                 .padding(.all, 25)
         }
     }

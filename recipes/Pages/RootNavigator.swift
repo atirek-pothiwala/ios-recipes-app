@@ -31,6 +31,8 @@ struct RootNavigator: View {
                         RecipeDetailPage(recipe: recipe)
                     case .favourites:
                         FavouriteListPage()
+                    case .profilePage(let account):
+                        ProfilePage(account: account)
                     }
                 }
         }

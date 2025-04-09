@@ -25,21 +25,7 @@ struct InstructionsView: View {
             
             VStack {
                 ForEach(0..<list.count, id: \.self) { index in
-                    let item = list[index]
-                    VStack(alignment: .leading, spacing: 0) {
-                        Text("Step \(index + 1)")
-                            .font(.system(size: 15, weight: .semibold))
-                            .foregroundStyle(.black)
-                        
-                        Text(item.description)
-                            .font(.system(size: 15, weight: .regular))
-                            .foregroundStyle(.black)
-                            .padding(.top, 5)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 10)
-                    
+                    InstructionCell(item: list[index])
                     if index < list.count - 1 {
                         Rectangle()
                             .foregroundStyle(.gray.opacity(0.15))

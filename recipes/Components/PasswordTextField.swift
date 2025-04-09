@@ -51,7 +51,7 @@ struct PasswordTextField<Label> : View where Label : View {
             Text("Email Address")
                 .foregroundStyle(.white.opacity(0.25))
         }
-        .modifier(TextFieldModifier())
+        .modifier(TextFieldModifier.normal)
         .safeAreaPadding(.all)
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)

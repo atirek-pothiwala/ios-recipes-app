@@ -7,14 +7,12 @@
 
 import SwiftUI
 
-struct PasswordTextField<Label> : View where Label : View {
+struct SearchTextField<Label> : View where Label : View {
     
     @Binding private var text: String
     let label: () -> Label
     let tint: Color
-    
-    @State var showPassword: Bool = false
-        
+            
     init(text: Binding<String>, tint: Color = Color.white.opacity(0.5), label: @escaping () -> Label) {
         _text = text
         self.tint = tint
@@ -23,21 +21,18 @@ struct PasswordTextField<Label> : View where Label : View {
     
     var body: some View {
         HStack {
-            if showPassword {
-                TextField(text: $text, label: label)
-                    .frame(maxWidth: .infinity)
-            } else {
-                SecureField(text: $text, label: label)
-                    .frame(maxWidth: .infinity)
-            }
+            TextField(text: $text, label: label)
+                .frame(maxWidth: .infinity)
             
             if !text.isEmpty {
                 Button {
-                    showPassword.toggle()
+                    text = ""
                 } label: {
-                    Image(systemName: showPassword ? "eye.fill" : "eye.slash.fill")
-                        .scaledToFit()
-                        .foregroundStyle(tint)
+                    if !text.isEmpty {
+                        Image(systemName: "xmark.circle.fill")
+                            .scaledToFit()
+                            .foregroundStyle(tint)
+                    }
                 }
             }
         }
@@ -47,11 +42,11 @@ struct PasswordTextField<Label> : View where Label : View {
 
 #Preview {
     VStack {
-        PasswordTextField(text: Binding.constant("test-password")) {
-            Text("Email Address")
+        SearchTextField(text: Binding.constant("")) {
+            Text("Search Recipes")
                 .foregroundStyle(.white.opacity(0.25))
         }
-        .modifier(TextFieldModifier())
+        .modifier(TextFieldModifier.normal)
         .safeAreaPadding(.all)
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)

@@ -8,11 +8,19 @@
 import SwiftUI
 
 struct TipCell: View {
+    let item: TipModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack(alignment: .firstTextBaseline, spacing: 10) {
+            Image(systemName: "checkmark.circle")
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundStyle(.black)
+            
+            Text(item.description)
+                .font(.system(size: 15, weight: .regular))
+                .foregroundStyle(.black)
+                .padding(.top, 5)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
-}
-
-#Preview {
-    TipCell()
 }

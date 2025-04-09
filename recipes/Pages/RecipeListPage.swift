@@ -14,12 +14,14 @@ struct RecipeListPage: View {
     
     @StateObject private var viewModel = RecipeListVM()
     @State var imageSize: CGSize = .zero
+    @FocusState private var focusedInput: Field?
         
     var body: some View {
         VStack(alignment: .leading) {
-            ToolbarView {
-                print("Open Filter")
-            }
+            ToolbarView()
+            
+            tfSearch
+            
             if viewModel.loading {
                 ProgressView("Loading Recipes")
                     .tint(Color.accent)
@@ -27,8 +29,8 @@ struct RecipeListPage: View {
                     .onAppear {
                         viewModel.fetch()
                     }
-            } else if !viewModel.list.isEmpty {
-                List($viewModel.list, id: \.id) { $item in
+            } else if !viewModel.filteredList.isEmpty {
+                List(viewModel.filteredList, id: \.self) { item in
                     RecipeCell(item, imageSize)
                         .onTapGesture {
                             navigator.push(Route.recipeDetail(item))
@@ -57,6 +59,28 @@ struct RecipeListPage: View {
         }
         .applyToast(toastor, viewModel.error, of: .error)
         .safeAreaPadding()
+    }
+    
+    var tfSearch: some View {
+        SearchTextField(text: $viewModel.search, tint: .accent.opacity(0.5)) {
+            Text("Search Recipes")
+        }
+        .modifier(TextFieldModifier.accent)
+        .padding(.bottom, 5)
+        .focused($focusedInput, equals: .search)
+        .keyboardType(.default)
+        .textContentType(.none)
+        .textInputAutocapitalization(.none)
+        .submitLabel(.done)
+        .onSubmit {
+            focusedInput = .none
+        }
+    }
+}
+
+private extension RecipeListPage {
+    enum Field: Int, Hashable, CaseIterable {
+        case search
     }
 }
 

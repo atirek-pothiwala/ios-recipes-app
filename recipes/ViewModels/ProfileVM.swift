@@ -9,33 +9,31 @@
 import Foundation
 import UIKit
 
-class SettingsVM: ObservableObject {
+class ProfileVM: ObservableObject {
     private let service = AccountService()
-    
-    @Published var account: AccountModel?
-    @Published var loading: Bool = true
+        
+    @Published var loading: Bool = false
     @Published var error: String = ""
-    @Published var swipe: SwipeActionView.SwipeAction = .none
     @Published var pickedImage: UIImage?
         
-    func fetch(loader: Bool = true) {
+    var validate: Bool {
+        return pickedImage != nil
+    }
+    
+    func upload(_ completion: @escaping () -> Void) {
         DispatchQueue.main.async {
-            if loader {
-                self.loading = true
-            }
+            self.loading = true
             self.error = ""
         }
-        service.profile { [weak self] result in
+        service.upload(pickedImage!) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
-                case .success(let account):
-                    self?.account = account
+                case .success(_):
+                    completion()
                 case .failure(let error):
                     self?.error = error.localizedDescription
                 }
-                if loader {
-                    self?.loading = false
-                }
+                self?.loading = false
             }
         }
     }

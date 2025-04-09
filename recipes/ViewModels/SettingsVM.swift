@@ -7,6 +7,7 @@
 
 
 import Foundation
+import UIKit
 
 class SettingsVM: ObservableObject {
     private let service = AccountService()

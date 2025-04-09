@@ -7,14 +7,12 @@
 
 import SwiftUI
 
-typealias NutritionFact = (title: String, servings: String)
-
 struct NutritionsView: View {
     
-    let list: [NutritionFact]
+    let item: NutritionModel
     
-    init(_ list: [NutritionFact]) {
-        self.list = list
+    init(_ item: NutritionModel) {
+        self.item = item
     }
     
     var body: some View {
@@ -25,11 +23,19 @@ struct NutritionsView: View {
                 .foregroundStyle(.black)
                 .padding(.top, 5)
          
-            VStack {
-                headerView()
-                listView()
+            VStack(spacing: 0) {
+                headerView
+                
+                NutritionCell(item: ("Calories", item.calories))
+                NutritionCell(item: ("Fat", item.fat))
+                NutritionCell(item: ("Saturated Fat", item.saturatedFat))
+                NutritionCell(item: ("Trans Fat", item.transFat))
+                NutritionCell(item: ("Carbohydrate", item.carbohydrate))
+                NutritionCell(item: ("Fibre", item.fibre))
+                NutritionCell(item: ("Sugar", item.sugar))
+                NutritionCell(item: ("Protein", item.protein))
+                NutritionCell(item: ("Sodium", item.sodium), showDivider: false)
             }
-            .padding(.vertical, 10)
             .cornerRadius(15, antialiased: true)
             .overlay(
                 RoundedRectangle(cornerRadius: 15)
@@ -40,7 +46,7 @@ struct NutritionsView: View {
         .padding(.all)
     }
     
-    func headerView() -> some View {
+    var headerView: some View {
         VStack(spacing: 0) {
             HStack(alignment: .center, spacing: 0) {
                 Text("Per Servings")
@@ -49,41 +55,12 @@ struct NutritionsView: View {
                 Spacer()
             }
             .frame(maxWidth: .infinity)
-            .padding(.horizontal, 20)
-            .padding(.vertical, 10)
+            .padding(.all, 20)
             
             Rectangle()
                 .foregroundStyle(.gray.opacity(0.15))
                 .frame(maxWidth: .infinity, maxHeight: 1)
         }
     }
-    
-    func listView() -> some View {
-        ForEach(0..<list.count, id: \.self) { index in
-            VStack(spacing: 0) {
-                HStack(alignment: .center, spacing: 0) {
-                    Text(list[index].title)
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(.black)
-                    Spacer()
-                    Text(list[index].servings)
-                        .font(.system(size: 15, weight: .regular))
-                        .foregroundStyle(.black)
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal, 20)
-                .padding(.vertical, 10)
-                
-                if index < list.count - 1 {
-                    Rectangle()
-                        .foregroundStyle(.gray.opacity(0.15))
-                        .frame(maxWidth: .infinity, maxHeight: 1)
-                }
-            }
-        }
-    }
-}
 
-#Preview {
-    NutritionsView(Constants.shared.nutritionFacts)
 }

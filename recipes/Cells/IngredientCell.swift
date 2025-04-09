@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct IngredientCell: View {
+    let item: IngredientModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        let text = !item.quantity.isEmpty ? "\(item.name) (\(item.quantity))" : item.name
+        Text(text)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .font(.system(size: 15, weight: .regular))
+            .foregroundStyle(.black)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 10)
     }
-}
-
-#Preview {
-    IngredientCell()
 }

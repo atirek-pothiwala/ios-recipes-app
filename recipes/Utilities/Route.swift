@@ -14,4 +14,5 @@ enum Route: Hashable {
     case forgotPassword
     case recipeDetail(RecipeModel)
     case favourites
+    case profilePage(AccountModel)
 }

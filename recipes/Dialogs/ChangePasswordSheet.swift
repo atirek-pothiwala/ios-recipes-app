@@ -65,11 +65,7 @@ struct ChangePasswordSheet: View {
                 .foregroundStyle(.accent.opacity(0.5))
         }
         .modifier(
-            TextFieldModifier(
-                textColor: .accent,
-                hintColor: .accent,
-                background: .accent.opacity(0.15)
-            )
+            TextFieldModifier.accent
         )
         .focused($focusedInput, equals: .password)
         .keyboardType(.default)
@@ -87,11 +83,7 @@ struct ChangePasswordSheet: View {
                 .foregroundStyle(.accent.opacity(0.5))
         }
         .modifier(
-            TextFieldModifier(
-                textColor: .accent,
-                hintColor: .accent,
-                background: .accent.opacity(0.15)
-            )
+            TextFieldModifier.accent
         )
         .focused($focusedInput, equals: .password)
         .keyboardType(.default)

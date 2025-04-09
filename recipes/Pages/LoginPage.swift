@@ -50,7 +50,7 @@ struct LoginPage: View {
             Text("Email Address")
                 .foregroundStyle(.white.opacity(0.25))
         }
-        .modifier(TextFieldModifier())
+        .modifier(TextFieldModifier.normal)
         .focused($focusedInput, equals: .email)
         .keyboardType(.emailAddress)
         .textContentType(.emailAddress)
@@ -66,7 +66,7 @@ struct LoginPage: View {
             Text("Password")
                 .foregroundStyle(.white.opacity(0.25))
         }
-        .modifier(TextFieldModifier())
+        .modifier(TextFieldModifier.normal)
         .focused($focusedInput, equals: .password)
         .keyboardType(.default)
         .textContentType(.password)
@@ -96,7 +96,7 @@ struct LoginPage: View {
         } label: {
             Image(systemName: "chevron.right")
         }
-        .foregroundStyle(Color.black)
+        .foregroundStyle(Color.accent)
         .font(.system(size: 18, weight: .bold))
         .padding(.all, 16)
         .background(.white, in: .circle)

@@ -25,14 +25,7 @@ struct IngredientsView: View {
             
             VStack {
                 ForEach(0..<list.count, id: \.self) { index in
-                    let item = list[index]
-                    let text = item.quantity > 0 ? "\(item.name) (\(item.quantity) \(item.unit))" : item.name
-                    Text(text)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .font(.system(size: 15, weight: .regular))
-                        .foregroundStyle(.black)
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 10)
+                    IngredientCell(item: list[index])
                     
                     if index < list.count - 1 {
                         Rectangle()

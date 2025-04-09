@@ -7,13 +7,11 @@
 
 import SwiftUI
 
-typealias VariationItem = (title: String, subtitle: String)
-
 struct VariationsView: View {
     
-    let list: [VariationItem]
+    let list: [VariationModel]
     
-    init(_ list: [VariationItem]) {
+    init(_ list: [VariationModel]) {
         self.list = list
     }
     
@@ -30,18 +28,8 @@ struct VariationsView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            ForEach(list, id: \.title) { item in
-                VStack(alignment: .leading, spacing: 0) {
-                    Text(item.0)
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(.black)
-                    
-                    Text(item.1)
-                        .font(.system(size: 15, weight: .regular))
-                        .foregroundStyle(.black)
-                        .padding(.top, 5)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
+            ForEach(list, id: \.id) { item in
+                VariationCell(item: item)
             }
         }
         .padding(.all, 20)
@@ -51,8 +39,4 @@ struct VariationsView: View {
         .padding(.all)
         
     }
-}
-
-#Preview {
-    VariationsView(Constants.shared.variations)
 }

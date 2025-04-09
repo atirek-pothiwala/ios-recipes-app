@@ -13,6 +13,18 @@ struct TextFieldModifier: ViewModifier {
     private var textColor: Color
     private var hintColor: Color
     
+    static var accent: TextFieldModifier {
+        TextFieldModifier(
+            textColor: .accent,
+            hintColor: .accent.opacity(0.5),
+            background: .accent.opacity(0.15)
+        )
+    }
+    
+    static var normal: TextFieldModifier {
+        TextFieldModifier()
+    }
+    
     init(textColor: Color = .white, hintColor: Color = .white, background: Color = .black.opacity(0.15)) {
         self.textColor = textColor
         self.hintColor = hintColor
@@ -26,7 +38,8 @@ struct TextFieldModifier: ViewModifier {
             .tint(hintColor)
             .frame(maxWidth: .infinity)
             .frame(height: 35)
-            .padding()
+            .padding(.horizontal, 15)
+            .padding(.vertical, 10)
             .background(background, in: .buttonBorder)
     }
 }

@@ -57,7 +57,9 @@ struct RecipeDetailModel: Identifiable, Hashable, Codable {
     let createdAt: Date
     let ingredients: [IngredientModel]
     let instructions: [InstructionModel]
+    let nutritions: [NutritionModel]
     let tips: [TipModel]
+    let variations: [VariationModel]
   
     var preparationTimeFormatted: String {
         return "\(preparationTime) mins"
@@ -80,7 +82,9 @@ struct RecipeDetailModel: Identifiable, Hashable, Codable {
         case createdAt = "createdAt"
         case ingredients = "ingredients"
         case instructions = "instructions"
+        case nutritions = "nutritions"
         case tips = "tips"
+        case variations = "variations"
     }
 
     init(from decoder: Decoder) throws {
@@ -102,7 +106,9 @@ struct RecipeDetailModel: Identifiable, Hashable, Codable {
         
         ingredients = try values.decode([IngredientModel].self, forKey: .ingredients)
         instructions = try values.decode([InstructionModel].self, forKey: .instructions)
+        nutritions = try values.decode([NutritionModel].self, forKey: .nutritions)
         tips = try values.decode([TipModel].self, forKey: .tips)
+        variations = try values.decode([VariationModel].self, forKey: .variations)
     }
 
 }
