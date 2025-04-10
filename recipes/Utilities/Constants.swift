@@ -47,6 +47,15 @@ class Constants {
             UserDefaults.standard.set(newValue, forKey: "favourites")
         }
     }
+    
+    var language: String {
+        get {
+            return UserDefaults.standard.string(forKey: "language") ?? "English"
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "language")
+        }
+    }
 
     func clear() {
         token = ""

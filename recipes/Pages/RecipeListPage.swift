@@ -23,7 +23,7 @@ struct RecipeListPage: View {
             tfSearch
             
             if viewModel.loading {
-                ProgressView("Loading Recipes")
+                ProgressView("loading_recipes".localized)
                     .tint(Color.accent)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .onAppear {
@@ -63,7 +63,7 @@ struct RecipeListPage: View {
     
     var tfSearch: some View {
         SearchTextField(text: $viewModel.search, tint: .accent.opacity(0.5)) {
-            Text("Search Recipes")
+            Text("search_recipes".localized)
         }
         .modifier(TextFieldModifier.accent)
         .padding(.bottom, 5)

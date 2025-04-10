@@ -42,9 +42,9 @@ struct RootNavigator: View {
         .addEnvironmentToastor(toastor)
         .onChange(of: network.isConnected, { oldValue, newValue in
             if newValue {
-                toastor.show("Internet is connected.", .success)
+                toastor.show("internet_yes".localized, .success)
             } else {
-                toastor.show("Internet is disconnected.", .error)
+                toastor.show("internet_no".localized, .error)
             }
         })
         .onAppear {

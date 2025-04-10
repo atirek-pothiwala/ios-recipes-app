@@ -22,7 +22,7 @@ struct VariationsView: View {
                     .font(.system(size: 24, weight: .semibold))
                     .foregroundStyle(.black)
                 
-                Text("Variations")
+                Text("variations".localized)
                     .font(.system(size: 24, weight: .semibold))
                     .foregroundStyle(.black)
             }

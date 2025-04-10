@@ -5,19 +5,127 @@
   Created by Atirek Pothiwala on 10/04/25.
   
 */
+
+// SplashPage
 "app_title" = "Recipes";
 "app_subtitle" = "By Knight Chef";
 
+// RootNavigator
+"internet_yes" = "Internet is connected.";
+"internet_no" = "Internet is disconnected.";
+
+// LoginPage
 "login_info" = "Enter you email address and password for login. Explore food recipes 😋";
 "email_address" = "Email Address";
 "password" = "Password";
 "forgot_password" = "Forgot Password";
 "new_account" = "New Account";
 
+// ForgotPasswordPage
 "forgot_password_info" = "Enter you email address and we will send you reset instructions.";
 
+// RegisterPage
 "create_account" = "Create Account";
 "register_info" = "Enter your personal details to create account. Explore food recipes 😋";
 "first_name" = "First Name";
 "last_name" = "Last Name";
 "confirm_password" = "Confirm Password";
+
+// NoDataView
+"findRecipesSoon" = "We will find some recipes\nfor you soon.";
+"tryAgain" = "Tap here to try again.";
+"step" = "Step %d";
+
+// ChangePasswordSheet
+"change_password" = "Change Password";
+"change_password_info" = "Set a new password for your account.";
+"current_password" = "Current Password";
+"new_password" = "New Password";
+
+// DeleteAccountSheet
+"delete_account" = "Delete Account";
+"delete_account_title" = "We're sad to see you go!";
+"delete_account_subtitle" = "Deleting your account will erase all your data.";
+"swipe_to_delete_account" = "Swipe to Delete Account";
+"processing" = "Processing";
+"account_deleted" = "Account Deleted";
+"delete_account_warning" = "Think it through — this action can't be undone.";
+
+// LogoutAccountSheet
+"logout_account" = "Logout Account";
+"logout_account_warning" = "We'll be here when you get back.";
+"logout_account_title" = "Logging out? See you soon!";
+"logout_account_subtitle" = "You will need to log in again to access your data.";
+"swipe_to_logout" = "Swipe to Logout";
+"logged_out" = "Logged Out";
+
+// DiscoverPage
+"discovering_recipes" = "Discovering Recipes";
+"marked_as_favourite" = "%@ - By %@ marked as favourite.";
+
+// MyFavouritesPage
+"my_favourites" = "My Favourites";
+"loading_favourites" = "Loading Favourites";
+
+// ProfilePage
+"profile_photo" = "Profile Photo";
+"loading_profile" = "Loading Profile";
+"pick_photo" = "Pick Photo";
+"submit" = "Submit";
+
+// RecipeListPage
+"loading_recipe" = "Loading Recipe";
+"search_recipes" = "Search Recipes";
+"by" = "By %@";
+
+// SettingsPage
+"loading_account" = "Loading Account";
+"developedBy" = "Made with ❤️ by Atirek Pothiwala";
+"my_favourites_info" = "View your favourite marked recipes.";
+"logout_account_info" = "Attempt to logout from your account.";
+"delete_account_info" = "Once deleted, your data cannot be recovered.";
+
+// TabPage
+"dicover" = "Dicover";
+"recipes" = "Recipes";
+"settings" = "Settings";
+
+// CookTimeView
+"cookTime" = "Cook Time";
+
+// IngredientsView
+"ingredients" = "Ingredients";
+
+// InstructionsView
+"instructions" = "Instructions";
+
+// NutritionView
+"nutritions" = "Nutrition Facts";
+"per_servings" = "Per Servings";
+"calories" = "Calories";
+"fat" = "Fat";
+"saturated_fat" = "Saturated Fat";
+"trans_fat" = "Trans Fat";
+"carbohydrate" = "Carbohydrate";
+"fibre" = "Fibre";
+"sugar" = "Sugar";
+"protein" = "Protein";
+"sodium" = "Sodium";
+
+// PrepTimeView
+"prepTime" = "Prep Time";
+
+// ServesView
+"serves" = "Serves";
+
+// TipsView
+"tips" = "Tips";
+
+// VariationsView
+"variations" = "Variations";
+
+// NavigationBarModifier
+"back" = "Back";
+
+// KeyboardModifier
+"close" = "Close";

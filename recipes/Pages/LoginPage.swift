@@ -20,7 +20,7 @@ struct LoginPage: View {
             VStack(alignment: .trailing, spacing: 15) {
                 LogoView()
                 
-                Text("Enter you email address and password for login. Explore food recipes 😋")
+                Text("login_info".localized)
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.leading)
                     .font(.system(size: 18, weight: .regular))
@@ -47,7 +47,7 @@ struct LoginPage: View {
     
     var tfEmail: some View {
         TextField(text: $viewModel.email) {
-            Text("Email Address")
+            Text("email_address".localized)
                 .foregroundStyle(.white.opacity(0.25))
         }
         .modifier(TextFieldModifier.normal)
@@ -63,7 +63,7 @@ struct LoginPage: View {
     
     var tfPassword: some View {
         PasswordTextField(text: $viewModel.password) {
-            Text("Password")
+            Text("password".localized)
                 .foregroundStyle(.white.opacity(0.25))
         }
         .modifier(TextFieldModifier.normal)
@@ -81,7 +81,7 @@ struct LoginPage: View {
         Button {
             navigator.push(Route.forgotPassword)
         } label: {
-            Text("Forgot Password?")
+            Text("forgot_password".localized)
         }
         .foregroundStyle(.white)
         .font(.system(size: 18, weight: .regular))
@@ -107,7 +107,7 @@ struct LoginPage: View {
         Button {
             navigator.push(Route.register)
         } label: {
-            Text("New Account")
+            Text("new_account".localized)
         }
         .foregroundStyle(.white)
         .font(.system(size: 18, weight: .bold))

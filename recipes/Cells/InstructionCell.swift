@@ -12,7 +12,7 @@ struct InstructionCell: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("Step \(item.stepNumber)")
+            Text(String.init(format: "step".localized, item.stepNumber))
                 .font(.system(size: 15, weight: .semibold))
                 .foregroundStyle(.black)
             

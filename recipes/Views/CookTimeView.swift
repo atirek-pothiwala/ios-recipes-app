@@ -29,7 +29,7 @@ struct CookTimeView: View {
                 Image(systemName: "frying.pan.fill")
                     .font(.system(size: 15, weight: .regular))
             }
-            Text("Cook Time")
+            Text("cook_time".localized)
                 .font(.system(size: 15, weight: .regular))
             Text(self.value)
                 .font(.system(size: 15, weight: .bold))

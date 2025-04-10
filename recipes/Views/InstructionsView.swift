@@ -17,7 +17,7 @@ struct InstructionsView: View {
     
     var body: some View {
         VStack(spacing: 15) {
-            Text("Instructions")
+            Text("instructions".localized)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .font(.system(size: 20, weight: .semibold))
                 .foregroundStyle(.black)

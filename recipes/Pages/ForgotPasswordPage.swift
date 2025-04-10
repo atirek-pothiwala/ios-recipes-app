@@ -15,7 +15,7 @@ struct ForgotPasswordPage: View {
     var body: some View {
         VStack(alignment: .trailing, spacing: 15) {
                         
-            Text("Enter you email address and we will send you reset instructions.")
+            Text("forgot_password_info".localized)
                 .foregroundStyle(.white)
                 .multilineTextAlignment(.leading)
                 .font(.system(size: 18, weight: .regular))
@@ -29,14 +29,14 @@ struct ForgotPasswordPage: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.accent)
         .safeAreaPadding()
-        .modifier(NavigationBarModifier("Forgot Password") {
+        .modifier(NavigationBarModifier("forgot_password".localized) {
             navigator.pop()
         })
     }
     
     var tfEmail: some View {
         TextField(text: $email) {
-            Text("Email Address")
+            Text("email_address".localized)
                 .foregroundStyle(.white.opacity(0.25))
         }
         .modifier(TextFieldModifier.normal)

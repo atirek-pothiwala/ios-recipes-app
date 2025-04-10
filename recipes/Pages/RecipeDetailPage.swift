@@ -19,7 +19,7 @@ struct RecipeDetailPage: View {
     var body: some View {
         ZStack(alignment: .center) {
             if viewModel.loading {
-                ProgressView("Loading Recipe")
+                ProgressView("loading_recipe".localized)
                     .tint(.white)
             } else if viewModel.recipe != nil {
                 ScrollView(.vertical) {
@@ -71,7 +71,7 @@ struct RecipeDetailPage: View {
                 .foregroundStyle(.white)
                 .font(.system(size: 20, weight: .bold))
             
-            Text("By \(viewModel.recipe!.chef)")
+            Text(String.init(format: "by".localized, viewModel.recipe!.chef))
                 .foregroundStyle(.white)
                 .font(.system(size: 16, weight: .semibold))
         }

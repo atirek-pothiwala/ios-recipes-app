@@ -18,7 +18,7 @@ struct RegisterPage: View {
     var body: some View {
         ScrollView(.vertical) {
             VStack(alignment: .trailing, spacing: 15) {
-                Text("Enter your personal details to create account. Explore food recipes 😋")
+                Text("register_info".localized)
                     .foregroundStyle(.white)
                     .font(.system(size: 18, weight: .regular))
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -39,7 +39,7 @@ struct RegisterPage: View {
         }
         .frame(maxWidth: .infinity)
         .background(Color.accent)
-        .modifier(NavigationBarModifier("Create Account") {
+        .modifier(NavigationBarModifier("create_account".localized) {
             navigator.pop()
         })
         .applyKeyboardNavigation($focusedInput)
@@ -49,7 +49,7 @@ struct RegisterPage: View {
     
     var tfFirstName: some View {
         TextField(text: $viewModel.firstName) {
-            Text("First Name")
+            Text("first_name".localized)
                 .foregroundStyle(.white.opacity(0.25))
         }
         .modifier(TextFieldModifier.normal)
@@ -65,7 +65,7 @@ struct RegisterPage: View {
     
     var tfLastName: some View {
         TextField(text: $viewModel.lastName) {
-            Text("Last Name")
+            Text("last_name".localized)
                 .foregroundStyle(.white.opacity(0.25))
         }
         .modifier(TextFieldModifier.normal)
@@ -81,7 +81,7 @@ struct RegisterPage: View {
     
     var tfEmail: some View {
         TextField(text: $viewModel.email) {
-            Text("Email Address")
+            Text("email_address".localized)
                 .foregroundStyle(.white.opacity(0.25))
         }
         .modifier(TextFieldModifier.normal)
@@ -97,7 +97,7 @@ struct RegisterPage: View {
     
     var tfPassword: some View {
         PasswordTextField(text: $viewModel.password) {
-            Text("Password")
+            Text("password".localized)
                 .foregroundStyle(.white.opacity(0.25))
         }
         .modifier(TextFieldModifier.normal)
@@ -113,7 +113,7 @@ struct RegisterPage: View {
     
     var tfConfirmPassword: some View {
         PasswordTextField(text: $viewModel.confirmPassword) {
-            Text("Confirm Password")
+            Text("confirm_password".localized)
                 .foregroundStyle(.white.opacity(0.25))
         }
         .modifier(TextFieldModifier.normal)

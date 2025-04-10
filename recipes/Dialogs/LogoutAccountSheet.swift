@@ -21,7 +21,7 @@ struct LogoutAccountSheet: View {
             
             btnLogout
             
-            Text("We'll be here when you get back.")
+            Text("logout_account_warning".localized)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .font(.system(size: 14, weight: .regular))
                 .foregroundStyle(Color.gray)
@@ -42,12 +42,12 @@ struct LogoutAccountSheet: View {
                 .foregroundStyle(Color.accent)
                 .padding(.bottom, 15)
             
-            Text("Logging out? See you soon!")
+            Text("logout_account_title".localized)
                 .font(.system(size: 24, weight: .semibold))
                 .foregroundStyle(Color.accent)
                 .padding(.bottom, 5)
             
-            Text("You will need to log in again to access your data.")
+            Text("logout_account_subtitle".localized)
                 .font(.system(size: 16, weight: .regular))
                 .foregroundStyle(Color.accent.opacity(0.5))
                 .multilineTextAlignment(.center)
@@ -60,9 +60,9 @@ struct LogoutAccountSheet: View {
             swipe: $swipe,
             thumbTint: Color.accentColor,
             backgroundColor: Color.accent,
-            defaultText: "Swipe to Logout",
-            progressText: "Processing",
-            completeText: "Logged Out") { action in
+            defaultText: "swipe_to_logout".localized,
+            progressText: "processing".localized,
+            completeText: "logged_out".localized) { action in
                 if action == .progress {
                     swipe = .completed
                 } else if action == .completed {

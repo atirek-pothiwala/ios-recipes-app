@@ -27,7 +27,7 @@ struct NavigationBarModifier: ViewModifier {
             .toolbar {
                 if (onBack != nil) {
                     ToolbarItem(placement: .topBarLeading) {
-                        BackButton("Back") {
+                        BackButton("back".localized) {
                             onBack?()
                         }
                     }

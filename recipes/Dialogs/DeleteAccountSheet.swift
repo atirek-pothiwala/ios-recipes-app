@@ -26,7 +26,7 @@ struct DeleteAccountSheet: View {
             
             btnDelete
             
-            Text("Think it through — this action can't be undone.")
+            Text("delete_account_warning".localized)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .font(.system(size: 14, weight: .regular))
                 .foregroundStyle(Color.gray)
@@ -48,12 +48,12 @@ struct DeleteAccountSheet: View {
                 .foregroundStyle(Color.accent)
                 .padding(.bottom, 15)
             
-            Text("We're sad to see you go!")
+            Text("delete_account_title".localized)
                 .font(.system(size: 24, weight: .semibold))
                 .foregroundStyle(Color.accent)
                 .padding(.bottom, 5)
             
-            Text("Deleting your account will erase all your data.")
+            Text("delete_account_subtitle".localized)
                 .font(.system(size: 16, weight: .regular))
                 .foregroundStyle(Color.accent.opacity(0.5))
                 .multilineTextAlignment(.center)
@@ -63,7 +63,7 @@ struct DeleteAccountSheet: View {
     
     var tfPassword: some View {
         PasswordTextField(text: $viewModel.password, tint: .accent.opacity(0.5)) {
-            Text("Password")
+            Text("password".localized)
                 .foregroundStyle(.accent.opacity(0.5))
         }
         .modifier(
@@ -82,9 +82,9 @@ struct DeleteAccountSheet: View {
     var btnDelete: some View {
         SwipeActionView(
             swipe: $viewModel.swipe,
-            defaultText: "Swipe to Delete Account",
-            progressText: "Processing",
-            completeText: "Account Deleted") { action in
+            defaultText: "swipe_to_delete_account".localized,
+            progressText: "processing".localized,
+            completeText: "account_deleted".localized) { action in
                 if action == .progress {
                     viewModel.delete()
                 } else if action == .completed {

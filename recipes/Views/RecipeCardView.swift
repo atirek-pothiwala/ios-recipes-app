@@ -51,7 +51,7 @@ struct RecipeCardView: View {
                 .foregroundStyle(.white)
                 .font(.system(size: 20, weight: .bold))
             
-            Text("By \(recipe.chef)")
+            Text(String.init(format: "by".localized, recipe.chef))
                 .foregroundStyle(.white)
                 .font(.system(size: 16, weight: .semibold))
         }

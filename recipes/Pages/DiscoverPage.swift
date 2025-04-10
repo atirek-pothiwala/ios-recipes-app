@@ -19,7 +19,7 @@ struct DiscoverPage: View {
             ToolbarView()
             ZStack(alignment: .center) {
                 if viewModel.loading {
-                    ProgressView("Discovering Recipes")
+                    ProgressView("discovering_recipes".localized)
                         .tint(Color.accent)
                 } else if !viewModel.list.isEmpty {
                     ForEach(viewModel.list.indices.reversed(), id: \.self) { index in
@@ -29,7 +29,7 @@ struct DiscoverPage: View {
                                 viewModel.ignoreRecipe(at: index)
                             } else if direction == .right {
                                 viewModel.favouriteRecipe(at: index)
-                                let message = "\(item.name) - By \(item.chef) marked as favourite."
+                                let message = String.init(format: "marked_as_favourite".localized, item.name, item.chef)
                                 toastor.show(message, .success)
                             }
                         }

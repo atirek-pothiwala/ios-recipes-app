@@ -22,7 +22,7 @@ struct TipsView: View {
                     .font(.system(size: 24, weight: .semibold))
                     .foregroundStyle(.black)
                 
-                Text("Tips")
+                Text("tips".localized)
                     .font(.system(size: 24, weight: .semibold))
                     .foregroundStyle(.black)
             }

@@ -24,7 +24,7 @@ struct ToolbarView: View {
                 .scaledToFit()
                 .cornerRadius(15, antialiased: true)
             
-            Text("Recipes")
+            Text("app_title".localized)
                 .font(.system(size: 30, weight: .semibold))
                 .foregroundStyle(Color.accent)
             

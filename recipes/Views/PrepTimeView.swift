@@ -30,7 +30,7 @@ struct PrepTimeView: View {
                 Image(systemName: "hourglass.circle.fill")
                     .font(.system(size: 20, weight: .regular))
             }
-            Text("Prep Time")
+            Text("prepTime".localized)
                 .font(.system(size: 15, weight: .regular))
             Text(self.value)
                 .font(.system(size: 15, weight: .bold))

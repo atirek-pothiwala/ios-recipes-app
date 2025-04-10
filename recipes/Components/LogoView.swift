@@ -32,12 +32,12 @@ struct LogoView: View {
                         .shadow(color: .white, radius: 5)
             
                     VStack(alignment: .center, spacing: 0) {
-                        Text("Recipes")
+                        Text("app_title".localized)
                             .font(.system(size: 35, weight: .semibold))
                             .foregroundStyle(Color.white)
                             .shadow(color: .black, radius: 10)
                         
-                        Text("By Knight Chef")
+                        Text("app_subtitle".localized)
                             .font(.system(size: 15, weight: .medium))
                             .foregroundStyle(.white)
                             .shadow(color: .black, radius: 10)

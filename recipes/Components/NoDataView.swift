@@ -31,8 +31,8 @@ struct NoDataView: View {
     let color: Color
     let onReload: OnReload?
     
-    init(text: String? = nil, color: Color = Color.accent, onReload: OnReload? = nil) {
-        self.text = text ?? "We will find some recipes\nfor you soon."
+    init(text: String = "findRecipesSoon".localized, color: Color = Color.accent, onReload: OnReload? = nil) {
+        self.text = text
         self.color = color
         self.onReload = onReload
     }
@@ -53,7 +53,7 @@ struct NoDataView: View {
                     VStack(alignment: .center, spacing: 10) {
                         Image(systemName: "arrow.clockwise.icloud.fill")
                             .font(.system(size: 40, weight: .regular))
-                        Text("Tap here to try again.")
+                        Text("tryAgain".localized)
                             .font(.system(size: 16, weight: .regular))
                     }
                 }

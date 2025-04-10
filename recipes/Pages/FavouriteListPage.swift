@@ -18,7 +18,7 @@ struct FavouriteListPage: View {
     var body: some View {
         VStack(alignment: .leading) {
             if viewModel.loading {
-                ProgressView("Loading Favourites")
+                ProgressView("loading_favourites".localized)
                     .tint(Color.accent)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else if !viewModel.list.isEmpty {
@@ -55,7 +55,7 @@ struct FavouriteListPage: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white)
-        .modifier(NavigationBarModifier("My Favourites") {
+        .modifier(NavigationBarModifier("my_favourites".localized) {
             navigator.pop()
         })
         .applyToast(toastor, viewModel.error, of: .error)

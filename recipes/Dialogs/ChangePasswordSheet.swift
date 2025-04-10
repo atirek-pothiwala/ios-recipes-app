@@ -45,12 +45,12 @@ struct ChangePasswordSheet: View {
                 .modifier(ShakeEffectModifier())
                 .padding(.bottom, 15)
             
-            Text("Change Password")
+            Text("change_password".localized)
                 .font(.system(size: 24, weight: .semibold))
                 .foregroundStyle(Color.accent)
                 .padding(.bottom, 5)
             
-            Text("Set a new password for your account.")
+            Text("change_password_info".localized)
                 .font(.system(size: 16, weight: .regular))
                 .foregroundStyle(Color.accent.opacity(0.5))
                 .multilineTextAlignment(.center)
@@ -61,7 +61,7 @@ struct ChangePasswordSheet: View {
     
     var tfPassword: some View {
         PasswordTextField(text: $viewModel.currentPassword, tint: .accent.opacity(0.5)) {
-            Text("Current Password")
+            Text("current_password".localized)
                 .foregroundStyle(.accent.opacity(0.5))
         }
         .modifier(
@@ -79,7 +79,7 @@ struct ChangePasswordSheet: View {
     
     var tfNewPassword: some View {
         PasswordTextField(text: $viewModel.newPassword, tint: .accent.opacity(0.5)) {
-            Text("New Password")
+            Text("new_password".localized)
                 .foregroundStyle(.accent.opacity(0.5))
         }
         .modifier(

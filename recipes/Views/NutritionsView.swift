@@ -17,7 +17,7 @@ struct NutritionsView: View {
     
     var body: some View {
         VStack(spacing: 15) {
-            Text("Nutrition Facts")
+            Text("nutritions".localized)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .font(.system(size: 20, weight: .semibold))
                 .foregroundStyle(.black)
@@ -26,15 +26,15 @@ struct NutritionsView: View {
             VStack(spacing: 0) {
                 headerView
                 
-                NutritionCell(item: ("Calories", item.calories))
-                NutritionCell(item: ("Fat", item.fat))
-                NutritionCell(item: ("Saturated Fat", item.saturatedFat))
-                NutritionCell(item: ("Trans Fat", item.transFat))
-                NutritionCell(item: ("Carbohydrate", item.carbohydrate))
-                NutritionCell(item: ("Fibre", item.fibre))
-                NutritionCell(item: ("Sugar", item.sugar))
-                NutritionCell(item: ("Protein", item.protein))
-                NutritionCell(item: ("Sodium", item.sodium), showDivider: false)
+                NutritionCell(item: ("calories".localized, item.calories))
+                NutritionCell(item: ("fat".localized, item.fat))
+                NutritionCell(item: ("saturated_fat".localized, item.saturatedFat))
+                NutritionCell(item: ("trans_fat".localized, item.transFat))
+                NutritionCell(item: ("carbohydrate".localized, item.carbohydrate))
+                NutritionCell(item: ("fibre".localized, item.fibre))
+                NutritionCell(item: ("sugar".localized, item.sugar))
+                NutritionCell(item: ("protein".localized, item.protein))
+                NutritionCell(item: ("sodium".localized, item.sodium), showDivider: false)
             }
             .cornerRadius(15, antialiased: true)
             .overlay(
@@ -49,7 +49,7 @@ struct NutritionsView: View {
     var headerView: some View {
         VStack(spacing: 0) {
             HStack(alignment: .center, spacing: 0) {
-                Text("Per Servings")
+                Text("per_servings".localized)
                     .font(.system(size: 15, weight: .black))
                     .foregroundStyle(.black)
                 Spacer()

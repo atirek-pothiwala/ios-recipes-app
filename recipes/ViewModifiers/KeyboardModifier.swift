@@ -20,7 +20,7 @@ struct KeyboardModifier<T: KeyboardFocusType>: ViewModifier where T.RawValue == 
                     Button {
                         dismissKeyboard()
                     } label: {
-                        Text("Close")
+                        Text("close".localized)
                     }
                     .foregroundStyle(.black)
                     

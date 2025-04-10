@@ -24,7 +24,7 @@ struct ProfilePage: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.accent)
-        .modifier(NavigationBarModifier("Profile Photo") {
+        .modifier(NavigationBarModifier("profile_photo".localized) {
             navigator.pop()
         })
         .toolbar {
@@ -45,7 +45,7 @@ struct ProfilePage: View {
                 .fill(Color.gray.opacity(0.5))
             
             if viewModel.loading {
-                ProgressView("Loading Profile")
+                ProgressView("loading_profile".localized)
                     .tint(.white)
             } else {
                 if let pickedImage = viewModel.pickedImage {
@@ -70,7 +70,7 @@ struct ProfilePage: View {
         Button {
             showImagePicker = true
         } label: {
-            Text("Pick Photo")
+            Text("pick_photo".localized)
                 .foregroundStyle(.white)
                 .font(.system(size: 18, weight: .bold))
         }
@@ -85,7 +85,7 @@ struct ProfilePage: View {
                 navigator.pop()
             }
         } label: {
-            Text("Submit")
+            Text("submit".localized)
                 .font(.system(size: 16, weight: .regular))
                 .foregroundStyle(Color.white)
         }

@@ -24,7 +24,7 @@ struct SettingsPage: View {
             ToolbarView()
             ZStack {
                 if viewModel.loading {
-                    ProgressView("Loading Account")
+                    ProgressView("loading_account".localized)
                         .tint(Color.accent)
                 } else {
                     ScrollView {
@@ -125,7 +125,7 @@ struct SettingsPage: View {
             btnDelete
                         
             
-            Text("Made with ❤️ by Atirek Pothiwala")
+            Text("developedBy".localized)
                 .font(.system(size: 16, weight: .regular))
                 .foregroundStyle(Color.accent.opacity(0.5))
                 .shadow(radius: 2)
@@ -190,11 +190,11 @@ struct SettingsPage: View {
                     .padding(.trailing, 5)
                 
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("My Favorites")
+                    Text("my_favourites".localized)
                         .font(.system(size: 20, weight: .semibold))
                         .foregroundStyle(Color.accent)
                     
-                    Text("View your favourite marked recipes.")
+                    Text("my_favourites_info".localized)
                         .font(.system(size: 14, weight: .regular))
                         .foregroundStyle(Color.accent.opacity(0.5))
                         .multilineTextAlignment(.leading)
@@ -224,11 +224,11 @@ struct SettingsPage: View {
                     .padding(.trailing, 5)
                 
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("Change Password")
+                    Text("change_password".localized)
                         .font(.system(size: 20, weight: .semibold))
                         .foregroundStyle(Color.accent)
                     
-                    Text("Set a new password for your account.")
+                    Text("change_password_info".localized)
                         .font(.system(size: 14, weight: .regular))
                         .foregroundStyle(Color.accent.opacity(0.5))
                         .multilineTextAlignment(.leading)
@@ -254,10 +254,10 @@ struct SettingsPage: View {
                     .padding(.trailing, 5)
                 
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("Logout Account")
+                    Text("logout_account".localized)
                         .font(.system(size: 20, weight: .semibold))
                     
-                    Text("Attempt to logout from your account.")
+                    Text("logout_account_info".localized)
                         .font(.system(size: 14, weight: .regular))
                         .opacity(0.5)
                         .multilineTextAlignment(.leading)
@@ -283,10 +283,10 @@ struct SettingsPage: View {
                     .padding(.trailing, 5)
                 
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("Delete Account")
+                    Text("delete_account".localized)
                         .font(.system(size: 20, weight: .semibold))
                     
-                    Text("Once deleted, your data cannot be recovered.")
+                    Text("delete_account_info".localized)
                         .font(.system(size: 14, weight: .regular))
                         .opacity(0.5)
                         .multilineTextAlignment(.leading)
