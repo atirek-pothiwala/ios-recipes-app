@@ -15,8 +15,10 @@ class Constants {
     
     private init() {}
 
-    static let IMAGE_BASE_URL: String = "http://localhost:3000"
-    static let BASE_URL: String = "http://localhost:3000/api"
+    static let BASE_URL: String = Bundle.main.object(forInfoDictionaryKey: "BASE_URL") as! String
+    
+    static let API_URL : String = "\(BASE_URL)/api"
+    static let IMAGE_URL : String = "\(BASE_URL)/uploads"
     
     static let LOGIN_URL: String = "/accounts/login"
     static let REGISTER_URL: String = "/accounts/register"
@@ -45,5 +47,9 @@ class Constants {
             UserDefaults.standard.set(newValue, forKey: "favourites")
         }
     }
-    
+
+    func clear() {
+        token = ""
+        favourites = []
+    }
 }

@@ -12,7 +12,7 @@ class FavouriteListVM: ObservableObject {
     private let service = RecipeService()
     
     @Published var list: [RecipeModel] = []
-    @Published var loading: Bool = true
+    @Published var loading: Bool = false
     @Published var error: String = ""
         
     func fetch(loader: Bool = true) {

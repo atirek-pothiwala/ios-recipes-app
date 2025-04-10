@@ -12,7 +12,7 @@ class RecipeDetailVM: ObservableObject {
     private let service = RecipeService()
     
     @Published var recipe: RecipeDetailModel?
-    @Published var loading: Bool = true
+    @Published var loading: Bool = false
     @Published var error: String = ""
         
     func fetch(_ id: Int, loader: Bool = true) {

@@ -13,7 +13,7 @@ class SettingsVM: ObservableObject {
     private let service = AccountService()
     
     @Published var account: AccountModel?
-    @Published var loading: Bool = true
+    @Published var loading: Bool = false
     @Published var error: String = ""
     @Published var swipe: SwipeActionView.SwipeAction = .none
         

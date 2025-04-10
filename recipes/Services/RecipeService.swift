@@ -9,7 +9,7 @@ import Foundation
 
 class RecipeService {
     func list(_ completion: @escaping (Result<[RecipeModel], Error>) -> Void) {
-        guard let url = URL(string: Constants.BASE_URL + Constants.LIST_RECIPE_URL) else {
+        guard let url = URL(string: Constants.API_URL + Constants.LIST_RECIPE_URL) else {
             completion(.failure(NSError(domain: "Invalid URL", code: 404, userInfo: nil)))
             return
         }
@@ -48,7 +48,7 @@ class RecipeService {
     }
     
     func detail(_ id: Int, _ completion: @escaping (Result<RecipeDetailModel, Error>) -> Void) {
-        guard var url = URL(string: Constants.BASE_URL + Constants.DETAIL_RECIPE_URL) else {
+        guard var url = URL(string: Constants.API_URL + Constants.DETAIL_RECIPE_URL) else {
             completion(.failure(NSError(domain: "Invalid URL", code: 404, userInfo: nil)))
             return
         }
@@ -90,7 +90,7 @@ class RecipeService {
     }
     
     func filterList(_ ids: [Int], _ completion: @escaping (Result<[RecipeModel], Error>) -> Void) {
-        guard var url = URL(string: Constants.BASE_URL + Constants.FILTER_LIST_RECIPE_URL) else {
+        guard var url = URL(string: Constants.API_URL + Constants.FILTER_LIST_RECIPE_URL) else {
             completion(.failure(NSError(domain: "Invalid URL", code: 404, userInfo: nil)))
             return
         }

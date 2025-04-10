@@ -14,7 +14,7 @@ typealias ChangePasswordFields = (currentPassword: String, newPassword: String)
 
 class AccountService {
     func login(_ fields: LoginFields, _ completion: @escaping (Result<String, Error>) -> Void) {
-        guard let url = URL(string: Constants.BASE_URL + Constants.LOGIN_URL) else {
+        guard let url = URL(string: Constants.API_URL + Constants.LOGIN_URL) else {
             completion(.failure(NSError(domain: "Invalid URL", code: 404, userInfo: nil)))
             return
         }
@@ -60,7 +60,7 @@ class AccountService {
     }
     
     func register(_ fields: RegisterFields, _ completion: @escaping (Result<String, Error>) -> Void) {
-        guard let url = URL(string: Constants.BASE_URL + Constants.REGISTER_URL) else {
+        guard let url = URL(string: Constants.API_URL + Constants.REGISTER_URL) else {
             completion(.failure(NSError(domain: "Invalid URL", code: 404, userInfo: nil)))
             return
         }
@@ -107,7 +107,7 @@ class AccountService {
     }
     
     func profile(_ completion: @escaping (Result<AccountModel, Error>) -> Void) {
-        guard let url = URL(string: Constants.BASE_URL + Constants.PROFILE_ACCOUNT_URL) else {
+        guard let url = URL(string: Constants.API_URL + Constants.PROFILE_ACCOUNT_URL) else {
             completion(.failure(NSError(domain: "Invalid URL", code: 404, userInfo: nil)))
             return
         }
@@ -146,7 +146,7 @@ class AccountService {
     }
     
     func delete(_ password: String, _ completion: @escaping (Result<String?, Error>) -> Void) {
-        guard let url = URL(string: Constants.BASE_URL + Constants.DELETE_ACCOUNT_URL) else {
+        guard let url = URL(string: Constants.API_URL + Constants.DELETE_ACCOUNT_URL) else {
             completion(.failure(NSError(domain: "Invalid URL", code: 404, userInfo: nil)))
             return
         }
@@ -188,7 +188,7 @@ class AccountService {
     }
     
     func changePassword(_ fields: ChangePasswordFields, _ completion: @escaping (Result<String?, Error>) -> Void) {
-        guard let url = URL(string: Constants.BASE_URL + Constants.CHANGE_PASSWORD_URL) else {
+        guard let url = URL(string: Constants.API_URL + Constants.CHANGE_PASSWORD_URL) else {
             completion(.failure(NSError(domain: "Invalid URL", code: 404, userInfo: nil)))
             return
         }
@@ -236,7 +236,7 @@ class AccountService {
             return
         }
         
-        guard let url = URL(string: Constants.BASE_URL + Constants.UPLOAD_URL) else {
+        guard let url = URL(string: Constants.API_URL + Constants.UPLOAD_URL) else {
             completion(.failure(NSError(domain: "Invalid URL", code: 404, userInfo: nil)))
             return
         }

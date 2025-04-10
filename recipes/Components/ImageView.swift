@@ -15,7 +15,7 @@ struct ImageView: View {
     }
     
     var asyncImageView: some View {
-        let imageUrl = URL(string: Constants.IMAGE_BASE_URL + url)
+        let imageUrl = URL(string: Constants.IMAGE_URL + url)
         return AsyncImage(url: imageUrl) { phase in
             switch phase {
             case .empty:

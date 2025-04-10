@@ -21,9 +21,6 @@ struct FavouriteListPage: View {
                 ProgressView("Loading Favourites")
                     .tint(Color.accent)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .onAppear {
-                        viewModel.fetch()
-                    }
             } else if !viewModel.list.isEmpty {
                 List {
                     ForEach($viewModel.list, id: \.id) { $item in
@@ -63,6 +60,9 @@ struct FavouriteListPage: View {
         })
         .applyToast(toastor, viewModel.error, of: .error)
         .safeAreaPadding()
+        .onAppear {
+            viewModel.fetch()
+        }
     }
 }
 

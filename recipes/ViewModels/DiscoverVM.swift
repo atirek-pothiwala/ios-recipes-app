@@ -12,9 +12,9 @@ class DiscoverVM: ObservableObject {
     private let service = RecipeService()
     
     @Published var list: [RecipeModel] = []
-    @Published var loading: Bool = true
+    @Published var loading: Bool = false
     @Published var error: String = ""
-    
+        
     func ignoreRecipe(at index: Int) {
         DispatchQueue.main.async {
             self.list.remove(at: index)
@@ -41,7 +41,8 @@ class DiscoverVM: ObservableObject {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let list):
-                    self?.list = list
+                    let favourites = Constants.shared.favourites
+                    self?.list = list.filter { !favourites.contains($0.id) }
                 case .failure(let error):
                     self?.error = error.localizedDescription
                 }

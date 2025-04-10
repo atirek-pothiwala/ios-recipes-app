@@ -21,9 +21,6 @@ struct DiscoverPage: View {
                 if viewModel.loading {
                     ProgressView("Discovering Recipes")
                         .tint(Color.accent)
-                        .onAppear {
-                            viewModel.fetch()
-                        }
                 } else if !viewModel.list.isEmpty {
                     ForEach(viewModel.list.indices.reversed(), id: \.self) { index in
                         let item = viewModel.list[index]
@@ -51,6 +48,9 @@ struct DiscoverPage: View {
         }
         .applyToast(toastor, viewModel.error, of: .error)
         .safeAreaPadding()
+        .onAppear {
+            viewModel.fetch()
+        }
     }
 }
 

@@ -21,9 +21,6 @@ struct RecipeDetailPage: View {
             if viewModel.loading {
                 ProgressView("Loading Recipe")
                     .tint(.white)
-                    .onAppear {
-                        viewModel.fetch(recipe.id)
-                    }
             } else if viewModel.recipe != nil {
                 ScrollView(.vertical) {
                     VStack(alignment: .leading, spacing: 0) {
@@ -63,6 +60,9 @@ struct RecipeDetailPage: View {
         })
         .applyToast(toastor, viewModel.error, of: .error)
         .safeAreaPadding(.bottom)
+        .onAppear {
+            viewModel.fetch(recipe.id)
+        }
     }
     
     var TitleView: some View {
