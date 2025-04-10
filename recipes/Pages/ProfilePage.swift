@@ -41,6 +41,9 @@ struct ProfilePage: View {
 
     var profileView: some View {
         ZStack(alignment: .center) {
+            Rectangle()
+                .fill(Color.gray.opacity(0.5))
+            
             if viewModel.loading {
                 ProgressView("Loading Profile")
                     .tint(.white)

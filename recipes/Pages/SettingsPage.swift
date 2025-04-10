@@ -74,6 +74,9 @@ struct SettingsPage: View {
     
     var profile: some View {
         ZStack(alignment: .bottomLeading) {
+            Rectangle()
+                .fill(Color.gray.opacity(0.5))
+            
             if viewModel.account == nil {
                 Image("phAccount")
                     .resizable()

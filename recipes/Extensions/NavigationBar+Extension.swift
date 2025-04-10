@@ -9,11 +9,11 @@ import UIKit
 
 extension UINavigationBar {
     
-    static func setDefaultTheme(color: UIColor = .white, background: UIColor = .accent) {
+    static func setDefaultTheme(foreground: UIColor = .white, background: UIColor = .accent) {
         let navAppearance = UINavigationBarAppearance()
         navAppearance.configureWithTransparentBackground()
-        navAppearance.largeTitleTextAttributes = [.foregroundColor: color]
-        navAppearance.titleTextAttributes = [.foregroundColor: color]
+        navAppearance.largeTitleTextAttributes = [.foregroundColor: foreground]
+        navAppearance.titleTextAttributes = [.foregroundColor: foreground]
         navAppearance.backgroundColor = background
 
         UINavigationBar.appearance().standardAppearance = navAppearance

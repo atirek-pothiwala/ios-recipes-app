@@ -11,6 +11,7 @@ struct RootNavigator: View {
     
     @StateObject private var navigator = Navigator()
     @StateObject private var toastor = Toastor()
+    @StateObject private var network = Network()
 
     var body: some View {
         NavigationStack(path: $navigator.path) {
@@ -36,8 +37,19 @@ struct RootNavigator: View {
                     }
                 }
         }
+        .environmentObject(network)
         .environmentObject(navigator)
         .addEnvironmentToastor(toastor)
+        .onChange(of: network.isConnected, { oldValue, newValue in
+            if newValue {
+                toastor.show("Internet is connected.", .success)
+            } else {
+                toastor.show("Internet is disconnected.", .error)
+            }
+        })
+        .onAppear {
+            network.monitorInternet()
+        }
     }
 
 }
