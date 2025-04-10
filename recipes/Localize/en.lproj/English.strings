@@ -1,0 +1,23 @@
+/* 
+  Localizable.strings
+  recipes
+
+  Created by Atirek Pothiwala on 10/04/25.
+  
+*/
+"app_title" = "Recipes";
+"app_subtitle" = "By Knight Chef";
+
+"login_info" = "Enter you email address and password for login. Explore food recipes 😋";
+"email_address" = "Email Address";
+"password" = "Password";
+"forgot_password" = "Forgot Password";
+"new_account" = "New Account";
+
+"forgot_password_info" = "Enter you email address and we will send you reset instructions.";
+
+"create_account" = "Create Account";
+"register_info" = "Enter your personal details to create account. Explore food recipes 😋";
+"first_name" = "First Name";
+"last_name" = "Last Name";
+"confirm_password" = "Confirm Password";
