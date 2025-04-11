@@ -25,6 +25,7 @@ struct SplashPage: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.accent)
         .safeAreaPadding()
+        .id(Constants.shared.language)
     }
     
     var btnGetStarted: some View {

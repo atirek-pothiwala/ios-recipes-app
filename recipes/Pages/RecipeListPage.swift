@@ -18,8 +18,6 @@ struct RecipeListPage: View {
         
     var body: some View {
         VStack(alignment: .leading) {
-            ToolbarView()
-            
             tfSearch
             
             if viewModel.loading {
@@ -58,7 +56,6 @@ struct RecipeListPage: View {
             }
         }
         .applyToast(toastor, viewModel.error, of: .error)
-        .safeAreaPadding()
     }
     
     var tfSearch: some View {

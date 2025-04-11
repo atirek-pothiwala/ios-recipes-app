@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ToolbarView: View {
-    typealias OnFilter = () -> Void
+    typealias OnClick = () -> Void
     
-    var onFilter: OnFilter?
+    var onClick: OnClick?
     
-    init(_ onFilter: OnFilter? = nil) {
-        self.onFilter = onFilter
+    init(_ onClick: OnClick? = nil) {
+        self.onClick = onClick
     }
     
     var body: some View {
@@ -28,13 +28,13 @@ struct ToolbarView: View {
                 .font(.system(size: 30, weight: .semibold))
                 .foregroundStyle(Color.accent)
             
-            if onFilter != nil {
+            if onClick != nil {
                 Spacer()
                 
                 Button {
-                    self.onFilter?()
+                    self.onClick?()
                 } label: {
-                    Image(systemName: "slider.horizontal.3")
+                    Image(systemName: "globe.central.south.asia.fill")
                         .font(.system(size: 24, weight: .semibold))
                         .foregroundStyle(Color.accent)
                 }

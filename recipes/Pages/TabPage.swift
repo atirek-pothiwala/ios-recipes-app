@@ -8,32 +8,65 @@
 import SwiftUI
 
 struct TabPage: View {
+    
+    @EnvironmentObject var navigator: Navigator
+    @State private var showLanguageDialog = false
         
     var body: some View {
-        TabView {
-            DiscoverPage()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .tabItem {
-                    Label("dicover".localized, systemImage: "tornado")
+        ZStack {
+            VStack {
+                ToolbarView {
+                    withAnimation(.easeInOut) {
+                        showLanguageDialog = true
+                    }
                 }
-                .padding(.bottom, 0)
+                
+                TabView {
+                    DiscoverPage()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .tabItem {
+                            Label("dicover".localized, systemImage: "tornado")
+                        }
+                        .safeAreaPadding(.horizontal, 15)
+                        .safeAreaPadding(.bottom, 15)
+                    
+                    RecipeListPage()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .tabItem {
+                            Label("recipes".localized, systemImage: "fork.knife")
+                        }
+                        .safeAreaPadding(.horizontal, 15)
+                        .safeAreaPadding(.bottom, 15)
+                    
+                    SettingsPage()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .tabItem {
+                            Label("settings".localized, systemImage: "gear")
+                        }
+                        .safeAreaPadding(.horizontal, 15)
+                        .safeAreaPadding(.bottom, 15)
+                }
+            }
             
-            RecipeListPage()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .tabItem {
-                    Label("recipes".localized, systemImage: "fork.knife")
-                }
-                .padding(.bottom, 10)
-            
-            SettingsPage()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .tabItem {
-                    Label("settings".localized, systemImage: "gear")
-                }
-                .padding(.bottom, 10)
+            languageDialog
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationBarBackButtonHidden()
         .safeAreaPadding()
+    }
+    
+    var languageDialog: some View {
+        ZStack {
+            if showLanguageDialog {
+                ChangeLanguageSheet { isLanguageChanged in
+                    showLanguageDialog = false
+                    if isLanguageChanged {
+                        navigator.reset()
+                    }
+                }
+            }
+        }
+        .animation(.easeInOut, value: showLanguageDialog)
     }
 }
 

@@ -15,16 +15,28 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				Localize/Gujarati.strings,
 			);
 			target = E3C6C6E42D8F2A850079FDD7 /* recipes */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		E3864EE22DA97F66007B826A /* Exceptions for "recipes" folder in "Compile Sources" phase from "recipes" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = E3C6C6E12D8F2A850079FDD7 /* Sources */;
+			membershipExceptions = (
+				Localize/Gujarati.strings,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		E3C6C6E72D8F2A850079FDD7 /* recipes */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				E35E9D1F2DA80C3E009A40B1 /* Exceptions for "recipes" folder in "recipes" target */,
+				E3864EE22DA97F66007B826A /* Exceptions for "recipes" folder in "Compile Sources" phase from "recipes" target */,
 			);
 			path = recipes;
 			sourceTree = "<group>";

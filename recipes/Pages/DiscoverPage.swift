@@ -15,39 +15,35 @@ struct DiscoverPage: View {
     @StateObject private var viewModel = DiscoverVM()
     
     var body: some View {
-        VStack(alignment: .leading) {
-            ToolbarView()
-            ZStack(alignment: .center) {
-                if viewModel.loading {
-                    ProgressView("discovering_recipes".localized)
-                        .tint(Color.accent)
-                } else if !viewModel.list.isEmpty {
-                    ForEach(viewModel.list.indices.reversed(), id: \.self) { index in
-                        let item = viewModel.list[index]
-                        RecipeCardView(recipe: item) { direction in
-                            if direction == .left {
-                                viewModel.ignoreRecipe(at: index)
-                            } else if direction == .right {
-                                viewModel.favouriteRecipe(at: index)
-                                let message = String.init(format: "marked_as_favourite".localized, item.name, item.chef)
-                                toastor.show(message, .success)
-                            }
+        ZStack(alignment: .center) {
+            if viewModel.loading {
+                ProgressView("discovering_recipes".localized)
+                    .tint(Color.accent)
+            } else if !viewModel.list.isEmpty {
+                ForEach(viewModel.list.indices.reversed(), id: \.self) { index in
+                    let item = viewModel.list[index]
+                    RecipeCardView(recipe: item) { direction in
+                        if direction == .left {
+                            viewModel.ignoreRecipe(at: index)
+                        } else if direction == .right {
+                            viewModel.favouriteRecipe(at: index)
+                            let message = String.init(format: "marked_as_favourite".localized, item.name, item.chef)
+                            toastor.show(message, .success)
                         }
-                        .onTapGesture {
-                            navigator.push(Route.recipeDetail(item))
-                        }
-                        .zIndex(Double(index))
                     }
-                } else {
-                    NoDataView {
-                        viewModel.fetch()
+                    .onTapGesture {
+                        navigator.push(Route.recipeDetail(item))
                     }
+                    .zIndex(Double(index))
+                }
+            } else {
+                NoDataView {
+                    viewModel.fetch()
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .applyToast(toastor, viewModel.error, of: .error)
-        .safeAreaPadding()
         .onAppear {
             viewModel.fetch()
         }

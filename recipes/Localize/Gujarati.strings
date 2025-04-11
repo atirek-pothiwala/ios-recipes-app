@@ -90,7 +90,7 @@
 "settings" = "સેટિંગ્સ";
 
 // CookTimeView
-"cookTime" = "રસોઈનો સમય";
+"cook_time" = "રસોઈનો સમય";
 
 // IngredientsView
 "ingredients" = "ઘટકો";
@@ -132,3 +132,10 @@
 // ChangeLanguageSheet
 "change_language" = "ભાષા બદલો";
 "change_language_info" = "તમે જેમાં આરામદાયક હોવ તેવી ભાષા પસંદ કરો";
+
+"language_english" = "અંગ્રેજી";
+"language_hindi" = "હિન્દી";
+"language_gujarati" = "ગુજરાતી";
+"language_english_subtitle" = "સરળ અને વ્યાપક ઉપયોગમાં લેવાય છે";
+"language_hindi_subtitle" = "ભારતની રાજભાષા";
+"language_gujarati_subtitle" = "ગુજરાતી લોકો માટે ખાસ";

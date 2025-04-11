@@ -18,34 +18,30 @@ struct SettingsPage: View {
     @State private var showChangePasswordSheet = false
     @State private var showLogoutSheet = false
     @State private var showDeleteSheet = false
-
+    
     var body: some View {
-        VStack(alignment: .leading) {
-            ToolbarView()
-            ZStack {
-                if viewModel.loading {
-                    ProgressView("loading_account".localized)
-                        .tint(Color.accent)
-                } else {
-                    ScrollView {
-                        VStack(alignment: .leading) {
-                            profile
-                            listMenu
-                                .padding(.top, 50)
-                        }
+        ZStack {
+            if viewModel.loading {
+                ProgressView("loading_account".localized)
+                    .tint(Color.accent)
+            } else {
+                ScrollView {
+                    VStack(alignment: .leading) {
+                        profile
+                        listMenu
+                            .padding(.top, 50)
                     }
-                    .scrollIndicators(.never)
-                    .refreshable {
-                        Task {
-                            viewModel.fetch(loader: false)
-                        }
+                }
+                .scrollIndicators(.never)
+                .refreshable {
+                    Task {
+                        viewModel.fetch(loader: false)
                     }
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .applyToast(toastor, viewModel.error, of: .error)
-        .safeAreaPadding()
         .sheet(isPresented: $showChangePasswordSheet) {
             ChangePasswordSheet {
                 showChangePasswordSheet = false
@@ -56,6 +52,7 @@ struct SettingsPage: View {
             LogoutAccountSheet { isLoggedOut in
                 showLogoutSheet = false
                 if isLoggedOut {
+                    Constants.shared.clear()
                     navigator.reset()
                 }
             }
@@ -63,6 +60,7 @@ struct SettingsPage: View {
         .sheet(isPresented: $showDeleteSheet) {
             DeleteAccountSheet { isAccountDeleted in
                 showDeleteSheet = false
+                Constants.shared.clear()
                 navigator.reset()
             }
             .addEnvironmentToastor(toastor)
@@ -129,7 +127,8 @@ struct SettingsPage: View {
                 .font(.system(size: 16, weight: .regular))
                 .foregroundStyle(Color.accent.opacity(0.5))
                 .shadow(radius: 2)
-                .padding(.all, 20)
+                .padding(.vertical, 30)
+                .padding(.horizontal, 15)
         }
     }
     
@@ -242,7 +241,9 @@ struct SettingsPage: View {
     
     var btnLogout: some View {
         Button {
-            showLogoutSheet = true
+            withAnimation {
+                showLogoutSheet = true
+            }
         } label: {
             HStack(alignment: .top) {
                 

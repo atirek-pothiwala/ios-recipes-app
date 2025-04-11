@@ -91,7 +91,7 @@
 "settings" = "Settings";
 
 // CookTimeView
-"cookTime" = "Cook Time";
+"cook_time" = "Cook Time";
 
 // IngredientsView
 "ingredients" = "Ingredients";
@@ -129,3 +129,14 @@
 
 // KeyboardModifier
 "close" = "Close";
+
+// ChangeLanguageSheet
+"change_language" = "Change Language";
+"change_language_info" = "Pick the language you’re most comfortable with";
+
+"language_english" = "English";
+"language_hindi" = "Hindi";
+"language_gujarati" = "Gujarati";
+"language_english_subtitle" = "Comfortable and widely used";
+"language_hindi_subtitle" = "भारत की राजभाषा";
+"language_gujarati_subtitle" = "ગુજરાતી લોકો માટે ખાસ";

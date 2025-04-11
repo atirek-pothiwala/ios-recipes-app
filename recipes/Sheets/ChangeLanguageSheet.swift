@@ -7,119 +7,148 @@
 
 import SwiftUI
 
-struct ChangePasswordSheet: View {
+struct ChangeLanguageSheet: View {
+    typealias OnDismiss = (_ isLanguageChanged: Bool) -> Void
     
-    @EnvironmentObject private var toastor: Toastor
-    @StateObject private var viewModel = ChangePasswordVM()
-    @FocusState private var focusedInput: Field?
+    private var defaultLanguageKey: String = Constants.shared.language
+    @State private var selectedLanguageKey: String = ""
     
-    let onDismiss: () -> Void
-
-    var body: some View {
-        VStack(alignment: .trailing, spacing: 15) {
-                        
-            titleView
-            
-            tfPassword
-            
-            tfNewPassword
-            
-            Spacer()
-            
-            btnSubmit
-        }
-        .safeAreaPadding(.all, 24)
-        .presentationDetents([.medium, .large])
-        .presentationDragIndicator(.visible)
-        .applyToast(toastor, viewModel.error, of: .error)
+    private let list = Languages.shared.list
+    private let onDismiss: OnDismiss
+    private var isDisabled: Bool {
+        return selectedLanguageKey.isEmpty || selectedLanguageKey == defaultLanguageKey
     }
     
+    init(onDismiss: @escaping OnDismiss) {
+        self.onDismiss = onDismiss
+    }
+    
+    var body: some View {
+        VStack(alignment: .center, spacing: 30) {
+            HStack {
+                Spacer()
+                btnSubmit
+            }
+            Spacer()
+            titleView
+            listView
+            btnDismiss
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .safeAreaPadding(.all, 16)
+        .background {
+            BlurBackground {
+                self.dismiss()
+            }
+        }
+        .transition(.move(edge: .bottom))
+    }
+        
     var titleView: some View {
         VStack(alignment: .leading, spacing: 0) {
-            
-            Image(systemName: "lock.fill")
+            Image(systemName: "globe.central.south.asia.fill")
                 .resizable()
                 .scaledToFit()
-                .foregroundStyle(Color.accent)
                 .frame(width: 75, height: 75)
-                .modifier(ShakeEffectModifier())
+                .foregroundStyle(Color.accent)
                 .padding(.bottom, 15)
             
-            Text("change_password".localized)
+            Text("change_language".localized)
                 .font(.system(size: 24, weight: .semibold))
                 .foregroundStyle(Color.accent)
                 .padding(.bottom, 5)
             
-            Text("change_password_info".localized)
+            Text("change_language_info".localized)
                 .font(.system(size: 16, weight: .regular))
                 .foregroundStyle(Color.accent.opacity(0.5))
-                .multilineTextAlignment(.center)
-                .padding(.bottom, 15)
+                .multilineTextAlignment(.leading)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
-    var tfPassword: some View {
-        PasswordTextField(text: $viewModel.currentPassword, tint: .accent.opacity(0.5)) {
-            Text("current_password".localized)
-                .foregroundStyle(.accent.opacity(0.5))
-        }
-        .modifier(
-            TextFieldModifier.accent
-        )
-        .focused($focusedInput, equals: .password)
-        .keyboardType(.default)
-        .textContentType(.password)
-        .textInputAutocapitalization(.none)
-        .submitLabel(.next)
-        .onSubmit {
-            focusedInput = .confirmPassword
-        }
-    }
-    
-    var tfNewPassword: some View {
-        PasswordTextField(text: $viewModel.newPassword, tint: .accent.opacity(0.5)) {
-            Text("new_password".localized)
-                .foregroundStyle(.accent.opacity(0.5))
-        }
-        .modifier(
-            TextFieldModifier.accent
-        )
-        .focused($focusedInput, equals: .password)
-        .keyboardType(.default)
-        .textContentType(.password)
-        .textInputAutocapitalization(.none)
-        .submitLabel(.done)
-        .onSubmit {
-            focusedInput = .none
-        }
-    }
-    
-    var btnSubmit: some View {
-        Button {
-            viewModel.change {
-                onDismiss()
+    var listView: some View {
+        VStack {
+            ForEach(list.indices, id: \.self) { index in
+                let item: LanguageItem = list[index]
+                Button {
+                    selectedLanguageKey = item.key
+                } label: {
+                    LanguageCell(item, defaultLanguageKey, selectedLanguageKey)
+                }
+                
+                if index != list.lastIndex {
+                    Rectangle()
+                        .fill(.white)
+                        .frame(height: 1)
+                        .padding(.leading, 50)
+                }
             }
-        } label: {
-            Image(systemName: "chevron.right")
         }
-        .foregroundStyle(Color.white)
+        .frame(maxWidth: .infinity)
+        .background(.accent)
+        .clipShape(.rect(cornerRadius: 15))
+        .shadow(radius: 2.5)
+    }
+    
+    var btnDismiss: some View {
+        Button {
+            self.dismiss()
+        } label: {
+            Image(systemName: "xmark")
+        }
+        .foregroundStyle(.white)
         .font(.system(size: 18, weight: .bold))
         .padding(.all, 16)
         .background(.accent, in: .circle)
-        .disabled(!viewModel.validate())
+        .shadow(radius: 2.5)
+    }
+    
+    var btnSubmit: some View {
+        Button("submit".localized) {
+            withAnimation {
+                Constants.shared.language = selectedLanguageKey
+                onDismiss(true)
+            }
+        }
+        .foregroundStyle(.white)
+        .font(.system(size: 14, weight: .semibold))
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
+        .background(isDisabled ? .gray : .black, in: .capsule)
+        .disabled(isDisabled)
+    }
+    
+    private func dismiss() {
+        withAnimation {
+            onDismiss(false)
+        }
     }
 }
 
-private extension ChangePasswordSheet {
-    enum Field: Int, Hashable, CaseIterable {
-        case password
-        case confirmPassword
+struct BlurBackground: View {
+    let onTap: () -> Void
+
+    var body: some View {
+        VisualEffectBlur(style: .systemMaterialLight)
+            .ignoresSafeArea()
+            .onTapGesture(perform: onTap)
+            .transition(.opacity)
     }
+}
+
+// UIKit-style blur wrapper
+struct VisualEffectBlur: UIViewRepresentable {
+    var style: UIBlurEffect.Style = .systemMaterial
+
+    func makeUIView(context: Context) -> UIVisualEffectView {
+        return UIVisualEffectView(effect: UIBlurEffect(style: style))
+    }
+
+    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {}
 }
 
 #Preview {
-    ChangePasswordSheet {
+    ChangeLanguageSheet { isLanguageChanged in
         
     }
 }
