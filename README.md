@@ -31,10 +31,16 @@ A sleek and modern iOS app for discovering mouth-watering recipes. Swipe like Ti
 - Easily revisit all the recipes you loved.
 
 ### ⚙️ Settings Page
-- Update profile settings and preferences.
+- Update profile photos
+- 🔓 Change Password
 - Includes "Swipe to Unlock" actions:
-  - 🔓 Logout
+  - 🚪 Logout
   - 🗑️ Delete Account
+
+### 🌐 Change Language Page
+- English
+- Hindi
+- Gujarati
 
 ---
 
