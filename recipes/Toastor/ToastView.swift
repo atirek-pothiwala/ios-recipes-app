@@ -34,7 +34,9 @@ struct ToastView: View {
             Spacer()
             if onClose != nil {
                 Button {
-                    onClose?(id)
+                    withAnimation {
+                        onClose?(id)
+                    }
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundStyle(.gray)
@@ -49,6 +51,7 @@ struct ToastView: View {
                 .fill(.background)
                 .shadow(radius: 3)
         }
+        .padding(.horizontal, 15)
     }
 }
 

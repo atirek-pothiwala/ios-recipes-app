@@ -42,7 +42,7 @@ class DiscoverVM: ObservableObject {
                 switch result {
                 case .success(let list):
                     let favourites = Constants.shared.favourites
-                    self?.list = list.filter { !favourites.contains($0.id) }
+                    self?.list = list.filter { !favourites.contains($0.id) }.reversed()
                 case .failure(let error):
                     self?.error = error.localizedDescription
                 }

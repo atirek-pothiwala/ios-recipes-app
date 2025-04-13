@@ -53,7 +53,7 @@ struct ToastsView: View {
                 }
             }
             .onTapGesture { isExpanded.toggle() }
-            .padding(.all, 15)
+            .padding(.vertical, 15)
         }
         .animation(.bouncy, value: isExpanded)
         .onChange(of: toasts.isEmpty) { _, isEmpty in
