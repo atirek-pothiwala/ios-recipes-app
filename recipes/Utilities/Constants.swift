@@ -60,6 +60,7 @@ class Constants {
     func clear() {
         token = ""
         favourites = []
+        language = ""
     }
     
 }

@@ -24,9 +24,24 @@ struct ToastsView: View {
                     .onTapGesture { isExpanded = false }
             }
 
-            let layout = isExpanded ? AnyLayout(VStackLayout(spacing: 10)) : AnyLayout(ZStackLayout())
+            let layout = isExpanded ? AnyLayout(VStackLayout(alignment: .trailing, spacing: 10)) : AnyLayout(ZStackLayout())
 
             layout {
+                
+                if isExpanded {
+                    Button {
+                        $toasts.clear()
+                    } label: {
+                        Image(systemName: "clear.fill")
+                            .resizable()
+                    }
+                    .frame(width: 25, height: 25)
+                    .foregroundStyle(.gray)
+                    .padding(.trailing, 15)
+                    
+                    Spacer()
+                }
+                
                 ForEach($toasts) { $toast in
                     let index = toasts.count - 1 - (toasts.firstIndex { $0.id == toast.id } ?? 0)
 

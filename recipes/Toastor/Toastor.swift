@@ -90,4 +90,14 @@ extension Binding<[ToastModel]> {
             self.wrappedValue.removeAll(where: { $0.id == id })
         }
     }
+    
+    func clear() {
+        self.forEach { toast in
+            toast.wrappedValue.isDeleting = true
+        }
+        withAnimation(.bouncy) {
+            self.wrappedValue.removeAll()
+        }
+        
+    }
 }
