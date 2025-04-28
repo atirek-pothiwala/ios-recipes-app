@@ -32,6 +32,11 @@
 /* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		E3360E832DBF6D9B00668989 /* assets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = assets;
+			sourceTree = "<group>";
+		};
 		E3C6C6E72D8F2A850079FDD7 /* recipes */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -57,6 +62,7 @@
 		E3C6C6DC2D8F2A850079FDD7 = {
 			isa = PBXGroup;
 			children = (
+				E3360E832DBF6D9B00668989 /* assets */,
 				E3C6C6E72D8F2A850079FDD7 /* recipes */,
 				E3C6C6E62D8F2A850079FDD7 /* Products */,
 			);
@@ -86,6 +92,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				E3360E832DBF6D9B00668989 /* assets */,
 				E3C6C6E72D8F2A850079FDD7 /* recipes */,
 			);
 			name = recipes;
