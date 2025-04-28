@@ -4,6 +4,9 @@ A sleek and modern iOS app for discovering mouth-watering recipes. Swipe like Ti
 
 ---
 
+## 🎬 Preview Demo
+![Preview Demo](demo.mp4)
+
 ## 📲 Features
 
 ### 🔐 Authentication
