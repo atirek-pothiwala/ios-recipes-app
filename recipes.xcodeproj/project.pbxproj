@@ -6,7 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E3360E852DBF6DAF00668989 /* demo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E3360E842DBF6DAF00668989 /* demo.mp4 */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		E3360E842DBF6DAF00668989 /* demo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = demo.mp4; sourceTree = "<group>"; };
 		E3C6C6E52D8F2A850079FDD7 /* recipes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = recipes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -32,11 +37,6 @@
 /* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		E3360E832DBF6D9B00668989 /* assets */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = assets;
-			sourceTree = "<group>";
-		};
 		E3C6C6E72D8F2A850079FDD7 /* recipes */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -62,7 +62,7 @@
 		E3C6C6DC2D8F2A850079FDD7 = {
 			isa = PBXGroup;
 			children = (
-				E3360E832DBF6D9B00668989 /* assets */,
+				E3360E842DBF6DAF00668989 /* demo.mp4 */,
 				E3C6C6E72D8F2A850079FDD7 /* recipes */,
 				E3C6C6E62D8F2A850079FDD7 /* Products */,
 			);
@@ -92,7 +92,6 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				E3360E832DBF6D9B00668989 /* assets */,
 				E3C6C6E72D8F2A850079FDD7 /* recipes */,
 			);
 			name = recipes;
@@ -141,6 +140,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3360E852DBF6DAF00668989 /* demo.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
